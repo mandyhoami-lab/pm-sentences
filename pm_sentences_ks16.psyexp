@@ -75,7 +75,7 @@
         <Param name="name" val="text" valType="code" updates="None"/>
         <Param name="wrapWidth" val="800" valType="code" updates="constant"/>
         <Param name="color" val="white" valType="str" updates="constant"/>
-        <Param name="text" val="Please rate each sentence on a scale of 1-7, where 1 is very negative, 7 is very positive, and 4 is neutral.  Proceed as quickly and accurately as possible.&#10;&#10;Please indicate to the researcher if you have understood these instructions&#10;&#10;Press the space bar to start" valType="str" updates="constant"/>
+        <Param name="text" val="Please rate each sentence on a scale of 1-7, where 1 is very negative, 7 is very positive, and 4 is neutral.  Proceed as quickly and accurately as possible.&#10;&#10;Press the space bar to continue" valType="str" updates="constant"/>
         <Param name="stopVal" val="" valType="code" updates="constant"/>
         <Param name="durationEstim" val="" valType="code" updates="None"/>
         <Param name="pos" val="[0, 0]" valType="code" updates="constant"/>
@@ -105,16 +105,18 @@
         <Param name="store" val="nothing" valType="str" updates="constant"/>
         <Param name="syncScreenRefresh" val="True" valType="bool" updates="constant"/>
       </KeyboardComponent>
-      <TextComponent name="text_3">
+    </Routine>
+    <Routine name="pm_instructions">
+      <TextComponent name="pm_text">
         <Param name="opacity" val="1" valType="code" updates="constant"/>
         <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
-        <Param name="name" val="text_3" valType="code" updates="None"/>
-        <Param name="wrapWidth" val="" valType="code" updates="constant"/>
+        <Param name="name" val="pm_text" valType="code" updates="None"/>
+        <Param name="wrapWidth" val="800" valType="code" updates="constant"/>
         <Param name="color" val="white" valType="str" updates="constant"/>
-        <Param name="text" val="$grouptext" valType="str" updates="set every repeat"/>
+        <Param name="text" val="There is one more thing to do while you rate the sentences.&#10;&#10;Some of the sentences will be about $blocktext. Whenever you see a sentence about $blocktext, press the backslash key or the T key as well as rating it. Pressing backslash or T does not move on to the next sentence - you still give your 1-7 rating afterwards.&#10;&#10;Press the space bar to start the task" valType="str" updates="set every repeat"/>
         <Param name="stopVal" val="" valType="code" updates="constant"/>
         <Param name="durationEstim" val="" valType="code" updates="None"/>
-        <Param name="pos" val="[400, 200]" valType="code" updates="constant"/>
+        <Param name="pos" val="[0, 0]" valType="code" updates="constant"/>
         <Param name="flip" val="" valType="str" updates="constant"/>
         <Param name="startEstim" val="" valType="code" updates="None"/>
         <Param name="units" val="from exp settings" valType="str" updates="None"/>
@@ -125,6 +127,22 @@
         <Param name="font" val="Arial" valType="str" updates="constant"/>
         <Param name="letterHeight" val="30" valType="code" updates="constant"/>
       </TextComponent>
+      <KeyboardComponent name="key_pm_start">
+        <Param name="correctAns" val="" valType="str" updates="constant"/>
+        <Param name="storeCorrect" val="False" valType="bool" updates="constant"/>
+        <Param name="name" val="key_pm_start" valType="code" updates="None"/>
+        <Param name="stopVal" val="" valType="code" updates="constant"/>
+        <Param name="durationEstim" val="" valType="code" updates="None"/>
+        <Param name="forceEndRoutine" val="True" valType="bool" updates="constant"/>
+        <Param name="startEstim" val="" valType="code" updates="None"/>
+        <Param name="discard previous" val="True" valType="bool" updates="constant"/>
+        <Param name="startType" val="time (s)" valType="str" updates="None"/>
+        <Param name="allowedKeys" val="'space'" valType="code" updates="constant"/>
+        <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
+        <Param name="startVal" val="0.0" valType="code" updates="None"/>
+        <Param name="store" val="nothing" valType="str" updates="constant"/>
+        <Param name="syncScreenRefresh" val="True" valType="bool" updates="constant"/>
+      </KeyboardComponent>
     </Routine>
     <Routine name="loadtargets">
       <CodeComponent name="code_4">
@@ -255,6 +273,7 @@
   </Routines>
   <Flow>
     <Routine name="start"/>
+    <Routine name="pm_instructions"/>
     <LoopInitiator loopType="TrialHandler" name="fillers">
       <Param name="conditionsFile" val="fillers.xlsx" valType="str" updates="None"/>
       <Param name="name" val="fillers" valType="code" updates="None"/>

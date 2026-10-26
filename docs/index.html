@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PM Sentences Task — Preview</title>
+<title>PM Sentences Task — Online</title>
 <style>
   body { font-family: Georgia, serif; background: #fff; color: #000; margin: 0; }
   #app { max-width: 760px; margin: 0 auto; padding: 40px 20px; text-align: center; }
@@ -16,10 +16,17 @@
   .small { font-family: sans-serif; font-size: 13px; color: #555; margin-top: 40px; }
   .pm-flag { font-family: sans-serif; color: #0a0; font-size: 15px; height: 20px; margin-top: 18px; }
   button { font-family: sans-serif; font-size: 15px; padding: 10px 22px; margin-top: 24px; cursor: pointer; }
+  button:disabled { opacity: 0.5; cursor: default; }
+  input[type=text] { font-size: 16px; padding: 8px; width: 220px; }
   table { margin: 24px auto; border-collapse: collapse; font-family: sans-serif; font-size: 14px; text-align: left; }
   td, th { border: 1px solid #ccc; padding: 6px 12px; }
-  .start-text { font-size: 19px; line-height: 1.6; text-align: left; }
-  .group-letter { font-size: 40px; margin: 24px 0; }
+  .body-text { font-size: 19px; line-height: 1.6; text-align: left; }
+  .q { font-family: sans-serif; font-size: 16px; text-align: left; margin: 28px 0; }
+  .q p { font-weight: bold; }
+  .q label { display: block; padding: 8px 10px; margin: 6px 0; border: 1px solid #ccc; cursor: pointer; }
+  .q label:hover { background: #f7f7f7; }
+  .feedback { font-family: sans-serif; font-size: 15px; margin-top: 10px; min-height: 20px; }
+  .good { color: #0a0; } .bad { color: #c00; }
 </style>
 </head>
 <body>
@@ -27,10 +34,10 @@
 <script>
 const DATA = {"fillers": [{"Sentence": "The poet was dying of aids.", "Rating": 2}, {"Sentence": "They found the resident of the house handcuffed in a corner.", "Rating": 2}, {"Sentence": "The pope was assassinated by the Mafia.", "Rating": 2}, {"Sentence": "The prisoners beat up the detective.", "Rating": 2}, {"Sentence": "They looked at the scan showing the tumour.", "Rating": 2.5}, {"Sentence": "They went on a trip away and were kidnapped.", "Rating": 2.5}, {"Sentence": "The painting was of a starving child.", "Rating": 2.5}, {"Sentence": "The foam gathered around his rabid mouth.", "Rating": 2.5}, {"Sentence": "The store was infested with rats and cockroaches.", "Rating": 2.5}, {"Sentence": "When her last relative died she went to a home for orphans.", "Rating": 2.5}, {"Sentence": "She never had a wash and smelt disgusting.", "Rating": 2.5}, {"Sentence": "The smoke rose from the buildings into the night.", "Rating": 3}, {"Sentence": "Household dust is formed of dead mites and lice.", "Rating": 3}, {"Sentence": "He found that his favourite suit had been cut to shreds.", "Rating": 3}, {"Sentence": "The tissue was covered in blood and pus.", "Rating": 3}, {"Sentence": "They injected the steroid into his muscle.", "Rating": 3}, {"Sentence": "He said he treated her like an object because she was stupid.", "Rating": 3}, {"Sentence": "The musical closed after three disastrous performances.", "Rating": 3.5}, {"Sentence": "The palace was burned to the ground during the revolution.", "Rating": 3.5}, {"Sentence": "The passage was full of muggers and drug dealers.", "Rating": 3.5}, {"Sentence": "The thyroid disorder made his eyes bulge.", "Rating": 3.5}, {"Sentence": "The marriage was a sham and they both had affairs.", "Rating": 3.5}, {"Sentence": "The mayor swindled money from the council.", "Rating": 3.5}, {"Sentence": "The model was anorexic and hardly ate.", "Rating": 3.5}, {"Sentence": "The masked gunmen ransacked the shop.", "Rating": 3.5}, {"Sentence": "He lost the money through a hole in his pocket.", "Rating": 3.5}, {"Sentence": "The boss kept them behind and they missed lunch.", "Rating": 4}, {"Sentence": "They went to play bowls but the lawn had been dug up by vandals.", "Rating": 4}, {"Sentence": "He asked for the package to be sent to his home.", "Rating": 5}, {"Sentence": "She hung the sheet out on the line to dry.", "Rating": 5}, {"Sentence": "She loaded the box up with books.", "Rating": 5}, {"Sentence": "She poured the liquid into the container.", "Rating": 5}, {"Sentence": "She put her hat on in the porch.", "Rating": 5}, {"Sentence": "She put the ring on her dressing table.", "Rating": 5}, {"Sentence": "She took the same path to school everyday.", "Rating": 5}, {"Sentence": "She used the dictionary to help with her spelling.", "Rating": 5}, {"Sentence": "She went to her bedroom to read a magazine.", "Rating": 5}, {"Sentence": "She wrote down her address for the receptionist.", "Rating": 5}, {"Sentence": "The apartment was in the town center.", "Rating": 5}, {"Sentence": "The book was aimed at people who were interested in fashion.", "Rating": 5}, {"Sentence": "The boy drew in a margin before he began writing.", "Rating": 5}, {"Sentence": "The cattle grazed in the field for most of the day.", "Rating": 5}, {"Sentence": "The walked over the hill, and round a corner", "Rating": 5}, {"Sentence": "The customer picked up a basket from by the door.", "Rating": 5}, {"Sentence": "The fiction section is on the second floor.", "Rating": 5}, {"Sentence": "They hung the drawing in the living room.", "Rating": 5}, {"Sentence": "The jumpers are being ordered from the factory for the catalogue.", "Rating": 5}, {"Sentence": "The put the guest in the spare room at the end of their hall.", "Rating": 5}, {"Sentence": "The shirt was made from cotton and had short sleeves.", "Rating": 5}, {"Sentence": "The symphony was written on manuscript.", "Rating": 5}, {"Sentence": "The tickets for the opera cost ten pounds.", "Rating": 5}, {"Sentence": "She sat at the desk in the middle of the class.", "Rating": 5}, {"Sentence": "She sat on the rock and tied her shoelace.", "Rating": 5}, {"Sentence": "She turned the handle and entered the room.", "Rating": 5}, {"Sentence": "They moved to the capital after university for work purposes", "Rating": 5}, {"Sentence": "The weather that day was the same as usual.", "Rating": 5}, {"Sentence": "The kite danced merrily in the wind", "Rating": 6}, {"Sentence": "The village is a beautiful and relaxing place to spend the weekend", "Rating": 6}, {"Sentence": "The children giggled happily as they sat on the bench.", "Rating": 6}, {"Sentence": "The gateway of their house was covered with pretty roses.", "Rating": 6}, {"Sentence": "A fragment of the beautiful parchment was saved.", "Rating": 6}, {"Sentence": "He put his best suit on for the night out", "Rating": 6}, {"Sentence": "The bride smiled affectionately as they threw the rice and confetti over her.", "Rating": 6}, {"Sentence": "She felt wonderfully refreshed after a wash.", "Rating": 6}, {"Sentence": "Their star player scored the winning goal.", "Rating": 6.5}, {"Sentence": "He was given a beautiful gold watch when he retired.", "Rating": 6.5}, {"Sentence": "The prince and his girlfriend were passionately in love.", "Rating": 6.5}, {"Sentence": "The lady kissed him passionately.", "Rating": 6.5}, {"Sentence": "The artist celebrated after he sold his first painting", "Rating": 6.5}, {"Sentence": "The hikers paddled in the cool mountain stream. ", "Rating": 6.5}, {"Sentence": "They won a luxurious apartment.", "Rating": 6.5}, {"Sentence": "The miners cheered and hugged when they struck the gold. ", "Rating": 6.5}, {"Sentence": "The signal told her that she had won the race.", "Rating": 6.5}, {"Sentence": "On her birthday she received a beautiful diamond ring.", "Rating": 6.5}, {"Sentence": " The message bought her extremely good news.  ", "Rating": 6.5}, {"Sentence": "He gently caressed his pregnant wife's stomach.", "Rating": 6.5}, {"Sentence": "He joyfully tore the tissue off the present.", "Rating": 6.5}, {"Sentence": " She grabbed the suitcase handle and set off on her dream holiday.", "Rating": 7}, {"Sentence": "He placed tender kisses on her palm.", "Rating": 7}, {"Sentence": "He won a scholarship to study at the finest academy. ", "Rating": 7}, {"Sentence": "He was overjoyed when he received the manager of the year award.", "Rating": 7}, {"Sentence": "His uncle won four million dollars and shared it amongst their family.", "Rating": 7}, {"Sentence": "Justice was done when the jury acquitted the innocent man. ", "Rating": 7}, {"Sentence": "The doctor miraculously saved the life of the child.", "Rating": 7}], "food": [{"Sentence": "Those who had eaten oyster got chronic diarrhoea.", "Rating": 2.5, "Valence": "Neg"}, {"Sentence": "The waiter put woodlice in the casserole.", "Rating": 2.5, "Valence": "Neg"}, {"Sentence": "She put the rice on to boil and set the time for 20 minutes.", "Rating": 5, "Valence": "Neu"}, {"Sentence": "The loaves of bread are on the third aisle in the supermarket.", "Rating": 5, "Valence": "Neu"}, {"Sentence": "The baking bread smelled delicious.", "Rating": 6.5, "Valence": "Pos"}, {"Sentence": "The cool peach flesh was sweet and succulent.", "Rating": 6.5, "Valence": "Pos"}], "vehicles": [{"Sentence": "They clung to the boat as it sunk in the ocean.", "Rating": 2, "Valence": "Neg"}, {"Sentence": "The driver of the taxi was a serial killer", "Rating": 2, "Valence": "Neg"}, {"Sentence": "The truck was bound for Lyon in France.", "Rating": 5, "Valence": "Neu"}, {"Sentence": "The wagon transported the goods into the city.", "Rating": 5, "Valence": "Neu"}, {"Sentence": "The magnificent ship sailed away into the sunset.", "Rating": 6, "Valence": "Pos"}, {"Sentence": "The view from the aircraft was spectacular", "Rating": 6, "Valence": "Pos"}]};
 const app = document.getElementById('app');
-let group, groupWord, targets, fillers, trials, trialIdx, trialStart, pmFlagged, results;
+let pid = '', group, groupWord, targets, fillers, trials, trialIdx, trialStart, pmFlagged, results;
 
 function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
-function ri(n){ return Math.floor(Math.random()*(n+1)); } // 0..n
+function ri(n){ return Math.floor(Math.random()*(n+1)); }
 
 function buildTrials(){
   group = Math.random() > 0.5 ? 'food' : 'vehicles';
@@ -46,24 +53,71 @@ function buildTrials(){
   results = [];
 }
 
-function showStart(){
+function showId(){
+  app.innerHTML =
+    '<div class="note"><b>Online version of the PM Sentences Task.</b>' +
+    'Browser version of pm_sentences_ks16.psyexp (PsychoPy). Same 90 sentences, same 1–7 rating, same 6 hidden targets, same \\ / T keys. ' +
+    'This page does not upload anything: your data is saved only when you download the CSV at the end, so keep this tab open until then.</div>' +
+    '<h1>PM Sentences Task</h1>' +
+    '<p class="body-text">In this study you will read sentences and rate them, and remember to do one extra thing when a certain kind of sentence appears. It takes about 10 minutes.</p>' +
+    '<p><label style="font-family:sans-serif">Participant ID: <input type="text" id="pid" autocomplete="off"></label></p>' +
+    '<p><button id="go" disabled>Continue</button></p>' +
+    '<p class="small">Enter your participant ID to continue.</p>';
+  const input = document.getElementById('pid');
+  const btn = document.getElementById('go');
+  input.addEventListener('input', ()=>{ btn.disabled = input.value.trim() === ''; });
+  input.focus();
+  btn.onclick = ()=>{ pid = input.value.trim(); showInstructions(); };
+  input.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' && pid === '' && input.value.trim()){ pid = input.value.trim(); showInstructions(); } });
+}
+
+function showInstructions(){
   buildTrials();
   app.innerHTML =
-    '<div class="note"><b>Preview — not the original experiment.</b>' +
-    'Browser recreation of pm_sentences_ks16.psyexp (PsychoPy 1.83) so you can look at the task. ' +
-    'Same sentences, same 1–7 rating, same 6 hidden targets, same \\ / T keys. ' +
-    'In the real task the PM instruction below is given verbally by the researcher, not shown on screen. ' +
-    'Nothing is uploaded; results stay on this page.</div>' +
-    '<div class="start-text">Please rate each sentence on a scale of 1–7, where 1 is very negative, 7 is very positive, and 4 is neutral. ' +
-    'Proceed as quickly and accurately as possible.<br><br>' +
-    '<b>Your extra job (prospective memory):</b> whenever a <b>' + groupWord + '</b> sentence appears, press <b>\\</b> or <b>T</b> as well as rating it.' +
-    '<br><br>Your group letter (shown to the researcher in the real task):</div>' +
-    '<div class="group-letter">' + (group === 'food' ? 'f' : 'v') + '</div>' +
-    '<p class="small">Press the space bar to start. 90 sentences. Press 1–7 to rate, \\ or T for a ' + groupWord + ' sentence.</p>';
+    '<h1>Instructions</h1>' +
+    '<div class="body-text"><p><b>Your main job:</b> rate each sentence on a scale of 1–7, where 1 is very negative, 7 is very positive, and 4 is neutral. Work as quickly and accurately as you can. Press the number key for your rating to move to the next sentence.</p>' +
+    '<p><b>Your extra job:</b> some of the sentences will be about <b>' + groupWord + '</b>. Whenever you see a sentence about ' + groupWord + ', press the <b>\\</b> key or the <b>T</b> key <b>as well as</b> rating it. Pressing \\ or T does not move on to the next sentence — you still give your 1–7 rating afterwards.</p>' +
+    '<p>There are 90 sentences in total. Press the space bar when you are ready to check you understood, then the task will start.</p></div>' +
+    '<p class="small">Press space to continue.</p>';
   const onKey = (e)=>{
-    if(e.code === 'Space' || e.key === ' '){ document.removeEventListener('keydown', onKey); trialIdx = 0; nextTrial(); }
+    if(e.code === 'Space' || e.key === ' '){ document.removeEventListener('keydown', onKey); showCheck(0); }
   };
   document.addEventListener('keydown', onKey);
+}
+
+const CHECKS = [
+  { q: ()=> 'What should you do when you see a sentence about ' + groupWord + '?',
+    opts: ()=> ['Press \\ or T as well as rating it', 'Only rate it, nothing else', 'Skip the sentence', 'Press the space bar'],
+    correct: 0,
+    why: 'Press \\ or T as well as giving your 1–7 rating.' },
+  { q: ()=> 'What do the number keys 1–7 do?',
+    opts: ()=> ['They rate the sentence from very negative (1) to very positive (7)', 'They skip to the next sentence', 'They mark a ' + groupWord + ' sentence', 'They pause the task'],
+    correct: 0,
+    why: 'Keys 1–7 give your rating: 1 is very negative, 7 is very positive, 4 is neutral.' },
+  { q: ()=> 'After you press \\ or T for a ' + groupWord + ' sentence, what happens next?',
+    opts: ()=> ['You still rate that sentence before moving on', 'The task moves straight to the next sentence', 'The task ends', 'The sentence disappears'],
+    correct: 0,
+    why: 'Pressing \\ or T does not move on — you still rate the sentence afterwards.' },
+];
+
+function showCheck(i){
+  const c = CHECKS[i];
+  app.innerHTML =
+    '<h1>Quick check (' + (i+1) + ' of ' + CHECKS.length + ')</h1>' +
+    '<div class="q"><p>' + c.q() + '</p>' +
+    c.opts().map((o,idx)=> '<label><input type="radio" name="q" value="' + idx + '"> ' + o + '</label>').join('') +
+    '</div><button id="ans">Check answer</button><div class="feedback" id="fb"></div>';
+  document.getElementById('ans').onclick = ()=>{
+    const sel = document.querySelector('input[name=q]:checked');
+    const fb = document.getElementById('fb');
+    if(!sel){ fb.textContent = 'Pick an answer first.'; return; }
+    if(+sel.value === c.correct){
+      fb.innerHTML = '<span class="good">Correct.</span>';
+      setTimeout(()=>{ if(i+1 < CHECKS.length) showCheck(i+1); else { trialIdx = 0; nextTrial(); } }, 700);
+    } else {
+      fb.innerHTML = '<span class="bad">Not quite — ' + c.why + ' Try again.</span>';
+    }
+  };
 }
 
 function nextTrial(){
@@ -114,24 +168,24 @@ function showEnd(){
     '<tr><td>PM false alarms (on filler trials)</td><td>' + fa + '</td></tr>' +
     '<tr><td>Mean PM response time</td><td>' + avg(pmRTs) + '</td></tr>' +
     '<tr><td>Mean rating RT</td><td>' + avg(rateRTs) + '</td></tr>' +
+    '<tr><td>Participant ID</td><td>' + pid + '</td></tr>' +
     '<tr><td>Group</td><td>' + groupWord + '</td></tr>' +
     '</table>' +
-    '<button id="csv">Download trial data (CSV)</button> <button id="again">Run again</button>' +
-    '<p class="small">Data is only in this browser tab — nothing was uploaded.</p>';
-  document.getElementById('again').onclick = showStart;
+    '<button id="csv">Download trial data (CSV)</button>' +
+    '<p class="small">Please download the CSV — it is the only copy of your data. Nothing was uploaded anywhere.</p>';
   document.getElementById('csv').onclick = ()=>{
-    let csv = 'trial,sentence,target,valence,group,rating,rating_rt,pm_pressed,target_rt\n';
+    let csv = 'participant_id,trial,sentence,target,valence,group,rating,rating_rt,pm_pressed,target_rt\n';
     trials.forEach((t,i)=>{
       const r = byTrial[i] || {};
       const s = '"' + (t.Sentence||'').replace(/"/g,'""') + '"';
-      csv += [i+1, s, t.Target, t.Valence||'', groupWord, r.rating||'', r.ratingRT||'', r.pm?1:0, r.targetRT||''].join(',') + '\n';
+      csv += [pid, i+1, s, t.Target, t.Valence||'', groupWord, r.rating||'', r.ratingRT||'', r.pm?1:0, r.targetRT||''].join(',') + '\n';
     });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(new Blob([csv], {type:'text/csv'}));
-    a.download = 'pm-preview-data.csv'; a.click();
+    a.download = 'pm-' + pid + '-' + groupWord + '.csv'; a.click();
   };
 }
-showStart();
+showId();
 </script>
 </body>
 </html>
