@@ -1,0 +1,300 @@
+<PsychoPy2experiment version="1.83.01" encoding="utf-8">
+  <Settings>
+    <Param name="Show mouse" val="False" valType="bool" updates="None"/>
+    <Param name="Data filename" val="u'data/%s_%s_%s' %(expInfo['participant'], expName, expInfo['date'])" valType="code" updates="None"/>
+    <Param name="Monitor" val="testMonitor" valType="str" updates="None"/>
+    <Param name="Enable Escape" val="True" valType="bool" updates="None"/>
+    <Param name="color" val="$[0,0,0]" valType="str" updates="None"/>
+    <Param name="Window size (pixels)" val="[1366, 768]" valType="code" updates="None"/>
+    <Param name="Full-screen window" val="True" valType="bool" updates="None"/>
+    <Param name="colorSpace" val="rgb" valType="str" updates="None"/>
+    <Param name="Experiment info" val="{u'participant': u''}" valType="code" updates="None"/>
+    <Param name="Save csv file" val="False" valType="bool" updates="None"/>
+    <Param name="Show info dlg" val="True" valType="bool" updates="None"/>
+    <Param name="Save wide csv file" val="True" valType="bool" updates="None"/>
+    <Param name="Save psydat file" val="True" valType="bool" updates="None"/>
+    <Param name="expName" val="pm_sentences_ks16" valType="str" updates="None"/>
+    <Param name="logging level" val="exp" valType="code" updates="None"/>
+    <Param name="blendMode" val="avg" valType="str" updates="None"/>
+    <Param name="Save excel file" val="False" valType="bool" updates="None"/>
+    <Param name="Units" val="pix" valType="str" updates="None"/>
+    <Param name="Save log file" val="True" valType="bool" updates="None"/>
+    <Param name="Screen" val="1" valType="num" updates="None"/>
+  </Settings>
+  <Routines>
+    <Routine name="end">
+      <TextComponent name="text_2">
+        <Param name="opacity" val="1" valType="code" updates="constant"/>
+        <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
+        <Param name="name" val="text_2" valType="code" updates="None"/>
+        <Param name="wrapWidth" val="800" valType="code" updates="constant"/>
+        <Param name="color" val="white" valType="str" updates="constant"/>
+        <Param name="text" val="Thank you very much for taking part" valType="str" updates="constant"/>
+        <Param name="stopVal" val="" valType="code" updates="constant"/>
+        <Param name="durationEstim" val="" valType="code" updates="None"/>
+        <Param name="pos" val="[0, 0]" valType="code" updates="constant"/>
+        <Param name="flip" val="" valType="str" updates="constant"/>
+        <Param name="startEstim" val="" valType="code" updates="None"/>
+        <Param name="units" val="from exp settings" valType="str" updates="None"/>
+        <Param name="startType" val="time (s)" valType="str" updates="None"/>
+        <Param name="ori" val="0" valType="code" updates="constant"/>
+        <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
+        <Param name="startVal" val="0.0" valType="code" updates="None"/>
+        <Param name="font" val="Arial" valType="str" updates="constant"/>
+        <Param name="letterHeight" val="30" valType="code" updates="constant"/>
+      </TextComponent>
+      <KeyboardComponent name="key_resp_3">
+        <Param name="correctAns" val="" valType="str" updates="constant"/>
+        <Param name="storeCorrect" val="False" valType="bool" updates="constant"/>
+        <Param name="name" val="key_resp_3" valType="code" updates="None"/>
+        <Param name="stopVal" val="" valType="code" updates="constant"/>
+        <Param name="durationEstim" val="" valType="code" updates="None"/>
+        <Param name="forceEndRoutine" val="True" valType="bool" updates="constant"/>
+        <Param name="startEstim" val="" valType="code" updates="None"/>
+        <Param name="discard previous" val="True" valType="bool" updates="constant"/>
+        <Param name="startType" val="time (s)" valType="str" updates="None"/>
+        <Param name="allowedKeys" val="'space'" valType="code" updates="constant"/>
+        <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
+        <Param name="startVal" val="0.0" valType="code" updates="None"/>
+        <Param name="store" val="nothing" valType="str" updates="constant"/>
+        <Param name="syncScreenRefresh" val="True" valType="bool" updates="constant"/>
+      </KeyboardComponent>
+    </Routine>
+    <Routine name="start">
+      <CodeComponent name="code">
+        <Param name="Begin Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="name" val="code" valType="code" updates="None"/>
+        <Param name="Begin Routine" val="import random&#10;random.seed()&#10;if random.random() &gt; .5:&#10;    blockfile = &quot;food.xlsx&quot;&#10;    blocktext = &quot;food&quot;&#10;    grouptext = &quot;f&quot;&#10;else:&#10;    blockfile = &quot;vehicles.xlsx&quot;&#10;    blocktext = &quot;vehicle&quot;&#10;    grouptext = &quot;v&quot;&#10;targetgap = 10&#10;targetjitter = 4&#10;fillernum = 0&#10;targetnum = 0&#10;NTrials = 90&#10;NTargets = 6&#10;&#10;puttarget = targetgap + random.randint(0,targetjitter)" valType="extendedCode" updates="constant"/>
+        <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
+        <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
+      </CodeComponent>
+      <TextComponent name="text">
+        <Param name="opacity" val="1" valType="code" updates="constant"/>
+        <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
+        <Param name="name" val="text" valType="code" updates="None"/>
+        <Param name="wrapWidth" val="800" valType="code" updates="constant"/>
+        <Param name="color" val="white" valType="str" updates="constant"/>
+        <Param name="text" val="Please rate each sentence on a scale of 1-7, where 1 is very negative, 7 is very positive, and 4 is neutral.  Proceed as quickly and accurately as possible.&#10;&#10;Please indicate to the researcher if you have understood these instructions&#10;&#10;Press the space bar to start" valType="str" updates="constant"/>
+        <Param name="stopVal" val="" valType="code" updates="constant"/>
+        <Param name="durationEstim" val="" valType="code" updates="None"/>
+        <Param name="pos" val="[0, 0]" valType="code" updates="constant"/>
+        <Param name="flip" val="" valType="str" updates="constant"/>
+        <Param name="startEstim" val="" valType="code" updates="None"/>
+        <Param name="units" val="from exp settings" valType="str" updates="None"/>
+        <Param name="startType" val="time (s)" valType="str" updates="None"/>
+        <Param name="ori" val="0" valType="code" updates="constant"/>
+        <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
+        <Param name="startVal" val="0.0" valType="code" updates="None"/>
+        <Param name="font" val="Arial" valType="str" updates="constant"/>
+        <Param name="letterHeight" val="30" valType="code" updates="constant"/>
+      </TextComponent>
+      <KeyboardComponent name="key_resp_2">
+        <Param name="correctAns" val="" valType="str" updates="constant"/>
+        <Param name="storeCorrect" val="False" valType="bool" updates="constant"/>
+        <Param name="name" val="key_resp_2" valType="code" updates="None"/>
+        <Param name="stopVal" val="" valType="code" updates="constant"/>
+        <Param name="durationEstim" val="" valType="code" updates="None"/>
+        <Param name="forceEndRoutine" val="True" valType="bool" updates="constant"/>
+        <Param name="startEstim" val="" valType="code" updates="None"/>
+        <Param name="discard previous" val="True" valType="bool" updates="constant"/>
+        <Param name="startType" val="time (s)" valType="str" updates="None"/>
+        <Param name="allowedKeys" val="'space'" valType="code" updates="constant"/>
+        <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
+        <Param name="startVal" val="0.0" valType="code" updates="None"/>
+        <Param name="store" val="nothing" valType="str" updates="constant"/>
+        <Param name="syncScreenRefresh" val="True" valType="bool" updates="constant"/>
+      </KeyboardComponent>
+      <TextComponent name="text_3">
+        <Param name="opacity" val="1" valType="code" updates="constant"/>
+        <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
+        <Param name="name" val="text_3" valType="code" updates="None"/>
+        <Param name="wrapWidth" val="" valType="code" updates="constant"/>
+        <Param name="color" val="white" valType="str" updates="constant"/>
+        <Param name="text" val="$grouptext" valType="str" updates="set every repeat"/>
+        <Param name="stopVal" val="" valType="code" updates="constant"/>
+        <Param name="durationEstim" val="" valType="code" updates="None"/>
+        <Param name="pos" val="[400, 200]" valType="code" updates="constant"/>
+        <Param name="flip" val="" valType="str" updates="constant"/>
+        <Param name="startEstim" val="" valType="code" updates="None"/>
+        <Param name="units" val="from exp settings" valType="str" updates="None"/>
+        <Param name="startType" val="time (s)" valType="str" updates="None"/>
+        <Param name="ori" val="0" valType="code" updates="constant"/>
+        <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
+        <Param name="startVal" val="0.0" valType="code" updates="None"/>
+        <Param name="font" val="Arial" valType="str" updates="constant"/>
+        <Param name="letterHeight" val="30" valType="code" updates="constant"/>
+      </TextComponent>
+    </Routine>
+    <Routine name="loadtargets">
+      <CodeComponent name="code_4">
+        <Param name="Begin Experiment" val="targetsentences = []&#10;targetratings = []&#10;targetvalence = []" valType="extendedCode" updates="constant"/>
+        <Param name="name" val="code_4" valType="code" updates="None"/>
+        <Param name="Begin Routine" val="" valType="extendedCode" updates="constant"/>
+        <Param name="End Routine" val="targetsentences.append(Sentence)&#10;targetratings.append(Rating)&#10;targetvalence.append(Valence)" valType="extendedCode" updates="constant"/>
+        <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
+      </CodeComponent>
+    </Routine>
+    <Routine name="trial">
+      <StaticComponent name="ISI">
+        <Param name="code" val="" valType="code" updates="None"/>
+        <Param name="name" val="ISI" valType="code" updates="None"/>
+        <Param name="stopVal" val="0.5" valType="code" updates="constant"/>
+        <Param name="durationEstim" val="" valType="code" updates="None"/>
+        <Param name="startEstim" val="" valType="code" updates="None"/>
+        <Param name="startType" val="time (s)" valType="str" updates="None"/>
+        <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
+        <Param name="startVal" val="0.0" valType="code" updates="None"/>
+      </StaticComponent>
+      <TextComponent name="fixation">
+        <Param name="opacity" val="1" valType="code" updates="constant"/>
+        <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
+        <Param name="name" val="fixation" valType="code" updates="None"/>
+        <Param name="wrapWidth" val="" valType="code" updates="constant"/>
+        <Param name="color" val="white" valType="str" updates="constant"/>
+        <Param name="text" val="+" valType="str" updates="constant"/>
+        <Param name="stopVal" val=".5" valType="code" updates="constant"/>
+        <Param name="durationEstim" val="" valType="code" updates="None"/>
+        <Param name="pos" val="[0, 0]" valType="code" updates="constant"/>
+        <Param name="flip" val="" valType="str" updates="constant"/>
+        <Param name="startEstim" val="" valType="code" updates="None"/>
+        <Param name="units" val="from exp settings" valType="str" updates="None"/>
+        <Param name="startType" val="time (s)" valType="str" updates="None"/>
+        <Param name="ori" val="0" valType="code" updates="constant"/>
+        <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
+        <Param name="startVal" val="0.5" valType="code" updates="None"/>
+        <Param name="font" val="Arial" valType="str" updates="constant"/>
+        <Param name="letterHeight" val="120" valType="code" updates="constant"/>
+      </TextComponent>
+      <TextComponent name="sentence">
+        <Param name="opacity" val="1" valType="code" updates="constant"/>
+        <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
+        <Param name="name" val="sentence" valType="code" updates="None"/>
+        <Param name="wrapWidth" val="800" valType="code" updates="constant"/>
+        <Param name="color" val="white" valType="str" updates="constant"/>
+        <Param name="text" val="$Sentence" valType="str" updates="set every repeat"/>
+        <Param name="stopVal" val="" valType="code" updates="constant"/>
+        <Param name="durationEstim" val="" valType="code" updates="None"/>
+        <Param name="pos" val="[0, 0]" valType="code" updates="constant"/>
+        <Param name="flip" val="" valType="str" updates="constant"/>
+        <Param name="startEstim" val="" valType="code" updates="None"/>
+        <Param name="units" val="from exp settings" valType="str" updates="None"/>
+        <Param name="startType" val="time (s)" valType="str" updates="None"/>
+        <Param name="ori" val="0" valType="code" updates="constant"/>
+        <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
+        <Param name="startVal" val="1" valType="code" updates="None"/>
+        <Param name="font" val="Arial" valType="str" updates="constant"/>
+        <Param name="letterHeight" val="45" valType="code" updates="constant"/>
+      </TextComponent>
+      <KeyboardComponent name="response">
+        <Param name="correctAns" val="" valType="str" updates="constant"/>
+        <Param name="storeCorrect" val="False" valType="bool" updates="constant"/>
+        <Param name="name" val="response" valType="code" updates="None"/>
+        <Param name="stopVal" val="" valType="code" updates="constant"/>
+        <Param name="durationEstim" val="" valType="code" updates="None"/>
+        <Param name="forceEndRoutine" val="False" valType="bool" updates="constant"/>
+        <Param name="startEstim" val="" valType="code" updates="None"/>
+        <Param name="discard previous" val="True" valType="bool" updates="constant"/>
+        <Param name="startType" val="time (s)" valType="str" updates="None"/>
+        <Param name="allowedKeys" val="'backslash', 't', '1', '2', '3', '4', '5', '6', '7'" valType="code" updates="constant"/>
+        <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
+        <Param name="startVal" val="1" valType="code" updates="None"/>
+        <Param name="store" val="last key" valType="str" updates="constant"/>
+        <Param name="syncScreenRefresh" val="True" valType="bool" updates="constant"/>
+      </KeyboardComponent>
+      <TextComponent name="scale">
+        <Param name="opacity" val="1" valType="code" updates="constant"/>
+        <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
+        <Param name="name" val="scale" valType="code" updates="None"/>
+        <Param name="wrapWidth" val="1000" valType="code" updates="constant"/>
+        <Param name="color" val="white" valType="str" updates="constant"/>
+        <Param name="text" val="Negative 1 - 2 - 3 - 4 - 5 - 6 - 7 Positive" valType="str" updates="constant"/>
+        <Param name="stopVal" val="" valType="code" updates="constant"/>
+        <Param name="durationEstim" val="" valType="code" updates="None"/>
+        <Param name="pos" val="[0, -150]" valType="code" updates="constant"/>
+        <Param name="flip" val="" valType="str" updates="constant"/>
+        <Param name="startEstim" val="" valType="code" updates="None"/>
+        <Param name="units" val="from exp settings" valType="str" updates="None"/>
+        <Param name="startType" val="time (s)" valType="str" updates="None"/>
+        <Param name="ori" val="0" valType="code" updates="constant"/>
+        <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
+        <Param name="startVal" val="1" valType="code" updates="None"/>
+        <Param name="font" val="Arial" valType="str" updates="constant"/>
+        <Param name="letterHeight" val="30" valType="code" updates="constant"/>
+      </TextComponent>
+      <CodeComponent name="code_2">
+        <Param name="Begin Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="name" val="code_2" valType="code" updates="None"/>
+        <Param name="Begin Routine" val="" valType="extendedCode" updates="constant"/>
+        <Param name="End Routine" val="thisExp.addData('Sentence', Sentence)&#10;thisExp.addData('Rating', Rating)&#10;thisExp.addData('Target', Target)&#10;thisExp.addData('Valence', Valence)&#10;thisExp.addData('Group', blocktext)&#10;&#10;if (trials.thisN) == NTrials-1:&#10;    trials.finished = True" valType="extendedCode" updates="constant"/>
+        <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="if &quot;backslash&quot; in response.keys:&#10;    continueRoutine = True&#10;    if target_flag &lt; 1:&#10;        thisExp.addData('Target_RT', response.rt)&#10;        target_flag = 1&#10;elif &quot;t&quot; in response.keys:&#10;    continueRoutine = True&#10;    if target_flag &lt; 1:&#10;        thisExp.addData('Target_RT', response.rt)&#10;        target_flag = 1&#10;elif len(response.keys) &gt; 0:&#10;    continueRoutine = False" valType="extendedCode" updates="constant"/>
+      </CodeComponent>
+    </Routine>
+    <Routine name="loadconditions">
+      <CodeComponent name="code_3">
+        <Param name="Begin Experiment" val="sentences = []&#10;ratings = []" valType="extendedCode" updates="constant"/>
+        <Param name="name" val="code_3" valType="code" updates="None"/>
+        <Param name="Begin Routine" val="" valType="extendedCode" updates="constant"/>
+        <Param name="End Routine" val="sentences.append(Sentence)&#10;ratings.append(Rating)" valType="extendedCode" updates="constant"/>
+        <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
+      </CodeComponent>
+    </Routine>
+    <Routine name="pretrial">
+      <CodeComponent name="code_5">
+        <Param name="Begin Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="name" val="code_5" valType="code" updates="None"/>
+        <Param name="Begin Routine" val="if targetnum == NTargets:&#10;    Sentence = sentences[fillernum]&#10;    Rating = ratings[fillernum]&#10;    Target = 0&#10;    Valence = &quot;&quot;&#10;    fillernum = fillernum + 1&#10;elif trials.thisN == puttarget:&#10;    puttarget = puttarget + targetgap + random.randint(0,targetjitter)&#10;    Sentence = targetsentences[targetnum]&#10;    Rating = targetratings[targetnum]&#10;    Valence = targetvalence[targetnum]&#10;    targetnum = targetnum + 1&#10;    Target = 1&#10;else:&#10;    Sentence = sentences[fillernum]&#10;    Rating = ratings[fillernum]&#10;    fillernum = fillernum + 1&#10;    Target = 0&#10;    Valence = &quot;&quot;&#10;target_flag = 0" valType="extendedCode" updates="constant"/>
+        <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
+        <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
+      </CodeComponent>
+    </Routine>
+  </Routines>
+  <Flow>
+    <Routine name="start"/>
+    <LoopInitiator loopType="TrialHandler" name="fillers">
+      <Param name="conditionsFile" val="fillers.xlsx" valType="str" updates="None"/>
+      <Param name="name" val="fillers" valType="code" updates="None"/>
+      <Param name="isTrials" val="False" valType="bool" updates="None"/>
+      <Param name="random seed" val="" valType="code" updates="None"/>
+      <Param name="loopType" val="random" valType="str" updates="None"/>
+      <Param name="nReps" val="1" valType="code" updates="None"/>
+      <Param name="endPoints" val="[0, 1]" valType="num" updates="None"/>
+      <Param name="conditions" val="[{u'Rating': 2, u'Sentence': u'The poet was dying of aids.'}, {u'Rating': 2, u'Sentence': u'They found the resident of the house handcuffed in a corner.'}, {u'Rating': 2, u'Sentence': u'The pope was assassinated by the Mafia.'}, {u'Rating': 2, u'Sentence': u'The prisoners beat up the detective.'}, {u'Rating': 2.5, u'Sentence': u'They looked at the scan showing the tumour.'}, {u'Rating': 2.5, u'Sentence': u'They went on a trip away and were kidnapped.'}, {u'Rating': 2.5, u'Sentence': u'The painting was of a starving child.'}, {u'Rating': 2.5, u'Sentence': u'The foam gathered around his rabid mouth.'}, {u'Rating': 2.5, u'Sentence': u'The store was infested with rats and cockroaches.'}, {u'Rating': 2.5, u'Sentence': u'When her last relative died she went to a home for orphans.'}, {u'Rating': 2.5, u'Sentence': u'She never had a wash and smelt disgusting.'}, {u'Rating': 3, u'Sentence': u'The smoke rose from the buildings into the night.'}, {u'Rating': 3, u'Sentence': u'Household dust is formed of dead mites and lice.'}, {u'Rating': 3, u'Sentence': u'He found that his favourite suit had been cut to shreds.'}, {u'Rating': 3, u'Sentence': u'The tissue was covered in blood and pus.'}, {u'Rating': 3, u'Sentence': u'They injected the steroid into his muscle.'}, {u'Rating': 3, u'Sentence': u'He said he treated her like an object because she was stupid.'}, {u'Rating': 3.5, u'Sentence': u'The musical closed after three disastrous performances.'}, {u'Rating': 3.5, u'Sentence': u'The palace was burned to the ground during the revolution.'}, {u'Rating': 3.5, u'Sentence': u'The passage was full of muggers and drug dealers.'}, {u'Rating': 3.5, u'Sentence': u'The thyroid disorder made his eyes bulge.'}, {u'Rating': 3.5, u'Sentence': u'The marriage was a sham and they both had affairs.'}, {u'Rating': 3.5, u'Sentence': u'The mayor swindled money from the council.'}, {u'Rating': 3.5, u'Sentence': u'The model was anorexic and hardly ate.'}, {u'Rating': 3.5, u'Sentence': u'They masked gunmen ransacked the shop.'}, {u'Rating': 3.5, u'Sentence': u'He lost the money through a hole in his pocket.'}, {u'Rating': 4, u'Sentence': u'The boss kept them behind and they missed lunch.'}, {u'Rating': 4, u'Sentence': u'They went to play bowls but the lawn had been dug up by vandals.'}, {u'Rating': 5, u'Sentence': u'He asked for the package to be sent to his home.'}, {u'Rating': 5, u'Sentence': u'She hung the sheet out on the line to dry.'}, {u'Rating': 5, u'Sentence': u'She loaded the box up with books.'}, {u'Rating': 5, u'Sentence': u'She poured the liquid into the container.'}, {u'Rating': 5, u'Sentence': u'She put her hat on in the porch.'}, {u'Rating': 5, u'Sentence': u'She put the ring on her dressing table.'}, {u'Rating': 5, u'Sentence': u'She took the same path to school everyday.'}, {u'Rating': 5, u'Sentence': u'She used the dictionary to help with her spelling.'}, {u'Rating': 5, u'Sentence': u'She went to her bedroom to read a magazine.'}, {u'Rating': 5, u'Sentence': u'She wrote down her address for the receptionist.'}, {u'Rating': 5, u'Sentence': u'The apartment was in the town center.'}, {u'Rating': 5, u'Sentence': u'The book was aimed at people who were interested in fashion.'}, {u'Rating': 5, u'Sentence': u'The boy drew in a margin before he began writing.'}, {u'Rating': 5, u'Sentence': u'The cattle grazed in the field for most of the day.'}, {u'Rating': 5, u'Sentence': u'The walked over the hill, and round a corner'}, {u'Rating': 5, u'Sentence': u'The customer picked up a basket from by the door.'}, {u'Rating': 5, u'Sentence': u'The fiction section is on the second floor.'}, {u'Rating': 5, u'Sentence': u'They hung the drawing in the living room.'}, {u'Rating': 5, u'Sentence': u'The jumpers are being ordered from the factory for the catalogue.'}, {u'Rating': 5, u'Sentence': u'The put the guest in the spare room at the end of their hall.'}, {u'Rating': 5, u'Sentence': u'The shirt was made from cotton and had short sleeves.'}, {u'Rating': 5, u'Sentence': u'The symphony was written on manuscript.'}, {u'Rating': 5, u'Sentence': u'The tickets for the opera cost ten pounds.'}, {u'Rating': 5, u'Sentence': u'She sat at the desk in the middle of the class.'}, {u'Rating': 5, u'Sentence': u'She sat on the rock and tied her shoelace.'}, {u'Rating': 5, u'Sentence': u'She turned the handle and entered the room.'}, {u'Rating': 5, u'Sentence': u'The weather that day was the same as usual.'}, {u'Rating': 6, u'Sentence': u'The kite danced merrily in the wind'}, {u'Rating': 6, u'Sentence': u'The village is a beautiful and relaxing place to spend the weekend'}, {u'Rating': 6, u'Sentence': u'The children giggled happily as they sat on the bench.'}, {u'Rating': 6, u'Sentence': u'The gateway of their house was covered with pretty roses.'}, {u'Rating': 6, u'Sentence': u'A fragment of the beautiful parchment was saved.'}, {u'Rating': 6, u'Sentence': u'He put his best suit on for the night out'}, {u'Rating': 6, u'Sentence': u'The bride smiled affectionately as they threw the rice and confetti over her.'}, {u'Rating': 6, u'Sentence': u'She felt wonderfully refreshed after a wash.'}, {u'Rating': 6.5, u'Sentence': u'Their star player scored the winning goal.'}, {u'Rating': 6.5, u'Sentence': u'He was given a beautiful gold watch when he retired.'}, {u'Rating': 6.5, u'Sentence': u'The prince and his girlfriend were passionately in love.'}, {u'Rating': 6.5, u'Sentence': u'The lady kissed him passionately.'}, {u'Rating': 6.5, u'Sentence': u'The artist celebrated after he sold his first painting'}, {u'Rating': 6.5, u'Sentence': u'The hikers paddled in the cool mountain stream. '}, {u'Rating': 6.5, u'Sentence': u'They won a luxurious apartment.'}, {u'Rating': 6.5, u'Sentence': u'The miners cheered and hugged when they struck the gold. '}, {u'Rating': 6.5, u'Sentence': u'The signal told her that she had won the race.'}, {u'Rating': 6.5, u'Sentence': u'On her birthday she received a beautiful diamond ring.'}, {u'Rating': 6.5, u'Sentence': u' The message bought her extremely good news.  '}, {u'Rating': 6.5, u'Sentence': u&quot;He gently caressed his pregnant wife's stomach.&quot;}, {u'Rating': 6.5, u'Sentence': u'He joyfully tore the tissue off the present.'}, {u'Rating': 7, u'Sentence': u' She grabbed the suitcase handle and set off on her dream holiday.'}, {u'Rating': 7, u'Sentence': u'He placed tender kisses on her palm.'}, {u'Rating': 7, u'Sentence': u'He won a scholarship to study at the finest academy. '}, {u'Rating': 7, u'Sentence': u'He was overjoyed when he received the manager of the year award.'}, {u'Rating': 7, u'Sentence': u'His uncle won four million dollars and shared it amongst their family.'}, {u'Rating': 7, u'Sentence': u'Justice was done when the jury acquitted the innocent man. '}, {u'Rating': 7, u'Sentence': u'The doctor miraculously saved the life of the child.'}]" valType="str" updates="None"/>
+      <Param name="Selected rows" val="" valType="str" updates="None"/>
+    </LoopInitiator>
+    <Routine name="loadconditions"/>
+    <LoopTerminator name="fillers"/>
+    <LoopInitiator loopType="TrialHandler" name="targets">
+      <Param name="conditionsFile" val="$blockfile" valType="str" updates="None"/>
+      <Param name="name" val="targets" valType="code" updates="None"/>
+      <Param name="isTrials" val="False" valType="bool" updates="None"/>
+      <Param name="random seed" val="" valType="code" updates="None"/>
+      <Param name="loopType" val="random" valType="str" updates="None"/>
+      <Param name="nReps" val="1" valType="code" updates="None"/>
+      <Param name="endPoints" val="[0, 1]" valType="num" updates="None"/>
+      <Param name="conditions" val="None" valType="str" updates="None"/>
+      <Param name="Selected rows" val="" valType="str" updates="None"/>
+    </LoopInitiator>
+    <Routine name="loadtargets"/>
+    <LoopTerminator name="targets"/>
+    <LoopInitiator loopType="TrialHandler" name="trials">
+      <Param name="conditionsFile" val="" valType="str" updates="None"/>
+      <Param name="name" val="trials" valType="code" updates="None"/>
+      <Param name="isTrials" val="True" valType="bool" updates="None"/>
+      <Param name="random seed" val="" valType="code" updates="None"/>
+      <Param name="loopType" val="random" valType="str" updates="None"/>
+      <Param name="nReps" val="1000" valType="code" updates="None"/>
+      <Param name="endPoints" val="[0, 1]" valType="num" updates="None"/>
+      <Param name="conditions" val="None" valType="str" updates="None"/>
+      <Param name="Selected rows" val="" valType="str" updates="None"/>
+    </LoopInitiator>
+    <Routine name="pretrial"/>
+    <Routine name="trial"/>
+    <LoopTerminator name="trials"/>
+    <Routine name="end"/>
+  </Flow>
+</PsychoPy2experiment>

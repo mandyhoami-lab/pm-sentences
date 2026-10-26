@@ -1,0 +1,4 @@
+data/
+*.psydat
+*.log
+.DS_Store
