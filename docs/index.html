@@ -24,6 +24,7 @@
   h1 { font-size: 22px; font-weight: normal; }
   .sentence { font-size: 26px; margin: 90px 0 50px; min-height: 80px; }
   .scale { font-size: 18px; letter-spacing: 1px; }
+  .ratebox { font-size: 20px; width: 90px; text-align: center; padding: 8px; margin-top: 16px; }
   .fix { font-size: 40px; margin: 120px 0; }
   .small { font-family: sans-serif; font-size: 13px; color: #555; margin-top: 40px; }
   .pm-flag { font-family: sans-serif; color: #0a0; font-size: 15px; height: 20px; margin-top: 18px; }
@@ -268,11 +269,13 @@ function nextPractice(){
     app.innerHTML =
       '<div class="sentence">' + t.Sentence + '</div>' +
       '<div class="scale">Negative&nbsp; 1 - 2 - 3 - 4 - 5 - 6 - 7 &nbsp;Positive</div>' +
+      '<div><input type="number" id="ratebox" class="ratebox" min="1" max="7" step="1" placeholder="1-7"></div>' +
       '<div class="pm-flag" id="pmflag"></div>' +
-      '<p class="small">Practice ' + (practiceIdx+1) + ' of 6 &nbsp;\u00b7&nbsp; press 1\u20137 to rate &nbsp;\u00b7&nbsp; this is practice, it does not count</p>';
+      '<p class="small">Practice ' + (practiceIdx+1) + ' of 6 &nbsp;\u00b7&nbsp; press 1\u20137 to rate or type it in the box &nbsp;\u00b7&nbsp; this is practice, it does not count</p>';
     trialStart = performance.now();
     const onKey = (e)=>{
       const k = e.key;
+      if(e.target && e.target.id === 'ratebox' && ['1','2','3','4','5','6','7'].includes(k)) return;
       if(k === '\\' || k === 't' || k === 'T'){
         document.getElementById('pmflag').textContent = 'That is the extra key \u2014 in the real task, press it only for ' + groupWord + ' sentences.';
         return;
@@ -285,6 +288,17 @@ function nextPractice(){
     };
     trialKeyHandler = onKey;
     document.addEventListener('keydown', onKey);
+    const box = document.getElementById('ratebox');
+    if(box){
+      box.focus();
+      box.addEventListener('input', ()=>{
+        if(['1','2','3','4','5','6','7'].includes(box.value.trim())){
+          document.removeEventListener('keydown', onKey);
+          trialKeyHandler = null;
+          practiceIdx++; nextPractice();
+        }
+      });
+    }
   }, 500);
 }
 
@@ -314,12 +328,14 @@ function nextTrial(){
     app.innerHTML =
       '<div class="sentence">' + t.Sentence + '</div>' +
       '<div class="scale">Negative&nbsp; 1 - 2 - 3 - 4 - 5 - 6 - 7 &nbsp;Positive</div>' +
+      '<div><input type="number" id="ratebox" class="ratebox" min="1" max="7" step="1" placeholder="1-7"></div>' +
       '<div class="pm-flag" id="pmflag"></div>' +
-      '<p class="small">Trial ' + (trialIdx+1) + ' of 90 &nbsp;\u00b7&nbsp; press 1\u20137 to rate &nbsp;\u00b7&nbsp; \\ or T if this is a ' + groupWord + ' sentence</p>';
+      '<p class="small">Trial ' + (trialIdx+1) + ' of 90 &nbsp;\u00b7&nbsp; press 1\u20137 to rate or type it in the box &nbsp;\u00b7&nbsp; \\ or T if this is a ' + groupWord + ' sentence</p>';
     trialStart = performance.now();
     const onKey = (e)=>{
       const k = e.key;
       const now = performance.now();
+      if(e.target && e.target.id === 'ratebox' && ['1','2','3','4','5','6','7'].includes(k)) return;
       if(k === '\\' || k === 't' || k === 'T'){
         if(!pmFlagged){ pmFlagged = true; results.push({ trial: trialIdx, pm: true, targetRT: Math.round(now - trialStart) }); document.getElementById('pmflag').textContent = 'PM response noted'; }
         return;
@@ -333,6 +349,19 @@ function nextTrial(){
     };
     trialKeyHandler = onKey;
     document.addEventListener('keydown', onKey);
+    const box = document.getElementById('ratebox');
+    if(box){
+      box.focus();
+      box.addEventListener('input', ()=>{
+        const v = box.value.trim();
+        if(['1','2','3','4','5','6','7'].includes(v)){
+          document.removeEventListener('keydown', onKey);
+          trialKeyHandler = null;
+          results.push({ trial: trialIdx, rating: v, ratingRT: Math.round(performance.now() - trialStart) });
+          trialIdx++; nextTrial();
+        }
+      });
+    }
   }, 500);
 }
 
