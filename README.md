@@ -8,7 +8,7 @@ Task files by Morys-Carter & Fredman Stein (2016), also described in Fredman Ste
 
 ## Try it online
 
-A browser version runs at https://mandyhoami-lab.github.io/pm-sentences/ — same 90 sentences, same 1–7 rating, same 6 hidden targets, same `\` / `T` keys. It is a recreation of the PsychoPy task for running the study online, not the original experiment file. Data is saved only as a CSV download at the end; nothing is uploaded.
+A browser version runs at https://mandyhoami-lab.github.io/pm-sentences/ — same 90 sentences, same 1–7 rating, same 6 hidden targets, same `\` / `T` keys. It is a recreation of the PsychoPy task for running the study online, not the original experiment file. Data is saved only as a CSV download at the end; nothing is uploaded. The online version has a menu (top left) with Study Information, Task, and Contact pages; a short 6-sentence practice session before the task; and a break halfway through (after trial 45). The practice sentences are drawn from the filler set, so they may come up again in the main task.
 
 ## Files
 
