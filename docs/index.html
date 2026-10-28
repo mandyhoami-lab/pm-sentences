@@ -62,7 +62,7 @@
     <p><b>What this study is about.</b> This study looks at prospective memory — remembering to do something in the future while you are busy doing something else. In this task, your main job is to rate sentences, and your extra job is to remember to press an extra key whenever a certain kind of sentence appears.</p>
     <p><b>What the task measures.</b> The task measures: prospective-memory hits (how many of the 6 target sentences you catch), prospective-memory false alarms (pressing the extra key on other sentences), prospective-memory response time, how accurately and how quickly you rate the sentences (your ongoing task), which target group you were given (food or vehicles), and the valence of the target sentences.</p>
     <p><b>Instructions.</b> Rate each sentence from 1 (very negative) to 7 (very positive), with 4 as neutral. Whenever you see a sentence about food or about vehicles (depending on your group), press the \ key or the T key as well as rating it. There are 90 sentences, a short practice first, and a break halfway through. It takes about 10 minutes.</p>
-    <p><b>Your data.</b> Nothing is uploaded anywhere. Your results stay in this browser tab until you download the CSV file at the end — that download is the only copy of your data, so keep the tab open until then.</p>
+    <p><b>Your data.</b> Nothing is uploaded anywhere. Your results stay in this browser tab until you download the Excel file at the end — that download is the only copy of your data, so keep the tab open until then.</p>
   </div>
   <p class="small">This page will be updated with the full study information.</p>
 </div>
@@ -186,7 +186,7 @@ function showId(){
   app.innerHTML =
     '<div class="note"><b>Online version of the PM Sentences Task.</b>' +
     'Browser version of pm_sentences_ks16.psyexp (PsychoPy). Same 90 sentences, same 1\u20137 rating, same 6 hidden targets, same \\ / T keys. ' +
-    'This page does not upload anything: your data is saved only when you download the CSV at the end, so keep this tab open until then.</div>' +
+    'This page does not upload anything: your data is saved only when you download the Excel file at the end, so keep this tab open until then.</div>' +
     '<h1>PM Sentences Task</h1>' +
     '<p class="body-text">In this study you will read sentences and rate them, and remember to do one extra thing when a certain kind of sentence appears. It takes about 10 minutes.</p>' +
     '<p><label style="font-family:sans-serif">Participant ID: <input type="text" id="pid" autocomplete="off" value="' + esc(pid) + '"></label></p>' +
@@ -381,10 +381,77 @@ function showPause(){
     '<p class="body-text">Take a short break. When you are ready, press Continue to carry on where you left off.</p>' +
     '<p><button id="resume">Continue</button></p>' +
     '<p><button id="leave">Leave the task</button></p>' +
-    '<p class="small">Leaving now will lose the data collected so far \u2014 the CSV is only created at the end.</p>';
+    '<p class="small">Leaving now will lose the data collected so far \u2014 the Excel file is only created at the end.</p>';
   document.getElementById('resume').onclick = ()=>{ paused = false; phase = 'trials'; nextTrial(); };
   document.getElementById('leave').onclick = ()=>{ exitTask(); };
   updateStatus();
+}
+
+
+function xmlEsc(s){
+  return String(s).replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function colName(n){
+  let s = '';
+  n++;
+  while(n > 0){ const m = (n - 1) % 26; s = String.fromCharCode(65 + m) + s; n = Math.floor((n - 1) / 26); }
+  return s;
+}
+function sheetXml(rows){
+  let x = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetData>';
+  rows.forEach((row, ri)=>{
+    x += '<row r="' + (ri+1) + '">';
+    row.forEach((v, ci)=>{
+      const ref = colName(ci) + (ri+1);
+      if(v === '' || v === null || v === undefined) x += '<c r="' + ref + '"/>';
+      else if(typeof v === 'number') x += '<c r="' + ref + '"><v>' + v + '</v></c>';
+      else x += '<c r="' + ref + '" t="inlineStr"><is><t xml:space="preserve">' + xmlEsc(v) + '</t></is></c>';
+    });
+    x += '</row>';
+  });
+  return x + '</sheetData></worksheet>';
+}
+function crc32(bytes){
+  if(!crc32.table){
+    const t = [];
+    for(let n=0; n<256; n++){
+      let c = n;
+      for(let k=0; k<8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+      t[n] = c >>> 0;
+    }
+    crc32.table = t;
+  }
+  let crc = 0xFFFFFFFF;
+  for(let i=0; i<bytes.length; i++) crc = crc32.table[(crc ^ bytes[i]) & 0xFF] ^ (crc >>> 8);
+  return (crc ^ 0xFFFFFFFF) >>> 0;
+}
+function buildXlsx(sheets){
+  const enc = new TextEncoder();
+  const u16 = n => [n & 0xFF, (n >> 8) & 0xFF];
+  const u32 = n => [n & 0xFF, (n >> 8) & 0xFF, (n >> 16) & 0xFF, (n >> 24) & 0xFF];
+  const files = [];
+  const overrides = sheets.map((s,i)=>'<Override PartName="/xl/worksheets/sheet'+(i+1)+'.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>').join('');
+  files.push(['[Content_Types].xml', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>' + overrides + '</Types>']);
+  files.push(['_rels/.rels', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>']);
+  files.push(['xl/workbook.xml', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets>' + sheets.map((s,i)=>'<sheet name="'+xmlEsc(s.name)+'" sheetId="'+(i+1)+'" r:id="rId'+(i+1)+'"/>').join('') + '</sheets></workbook>']);
+  files.push(['xl/_rels/workbook.xml.rels', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' + sheets.map((s,i)=>'<Relationship Id="rId'+(i+1)+'" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet'+(i+1)+'.xml"/>').join('') + '</Relationships>']);
+  sheets.forEach((s,i)=>{ files.push(['xl/worksheets/sheet'+(i+1)+'.xml', sheetXml(s.rows)]); });
+  const out = [];
+  const cd = [];
+  let offset = 0;
+  files.forEach(([name, text])=>{
+    const data = enc.encode(text);
+    const nb = enc.encode(name);
+    const crc = crc32(data);
+    const lh = [0x50,0x4B,0x03,0x04, ...u16(20), ...u16(0), ...u16(0), ...u16(0), ...u16(33), ...u32(crc), ...u32(data.length), ...u32(data.length), ...u16(nb.length), ...u16(0), ...nb, ...data];
+    out.push(...lh);
+    cd.push(0x50,0x4B,0x01,0x02, ...u16(20), ...u16(20), ...u16(0), ...u16(0), ...u16(0), ...u16(33), ...u32(crc), ...u32(data.length), ...u32(data.length), ...u16(nb.length), ...u16(0), ...u16(0), ...u16(0), ...u16(0), ...u32(0), ...u32(offset), ...nb);
+    offset += lh.length;
+  });
+  const cdStart = offset;
+  out.push(...cd);
+  out.push(0x50,0x4B,0x05,0x06, ...u16(0), ...u16(0), ...u16(files.length), ...u16(files.length), ...u32(cd.length), ...u32(cdStart), ...u16(0));
+  return new Blob([new Uint8Array(out)], {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
 }
 
 function showEnd(){
@@ -410,18 +477,24 @@ function showEnd(){
     '<tr><td>Participant ID</td><td>' + esc(pid) + '</td></tr>' +
     '<tr><td>Group</td><td>' + groupWord + '</td></tr>' +
     '</table>' +
-    '<button id="csv">Download trial data (CSV)</button>' +
-    '<p class="small">Please download the CSV \u2014 it is the only copy of your data. Nothing was uploaded anywhere.</p>';
-  document.getElementById('csv').onclick = ()=>{
-    let csv = 'participant_id,trial,sentence,target,valence,group,rating,rating_rt,pm_pressed,target_rt,skipped\n';
+    '<button id="xlsx">Download trial data (Excel)</button>' +
+    '<p class="small">Please download the Excel file \u2014 it is the only copy of your data. Nothing was uploaded anywhere.</p>';
+  document.getElementById('xlsx').onclick = ()=>{
+    const trialRows = [['participant_id','trial','sentence','target','valence','group','rating','rating_rt','pm_pressed','target_rt','skipped']];
     trials.forEach((t,i)=>{
       const r = byTrial[i] || {};
-      const s = '"' + (t.Sentence||'').replace(/"/g,'""') + '"';
-      csv += [pid, i+1, s, t.Target, t.Valence||'', groupWord, r.rating||'', r.ratingRT||'', r.pm?1:0, r.targetRT||'', r.skipped?1:0].join(',') + '\n';
+      trialRows.push([pid, i+1, t.Sentence||'', t.Target, t.Valence||'', groupWord, r.rating ? +r.rating : '', r.ratingRT||'', r.pm?1:0, r.targetRT||'', r.skipped?1:0]);
     });
+    const summaryRows = [['measure','result'],
+      ['PM hits (of 6 ' + groupWord + ' targets)', hits + ' / 6'],
+      ['PM false alarms (on filler trials)', fa],
+      ['Mean PM response time', avg(pmRTs)],
+      ['Mean rating RT', avg(rateRTs)],
+      ['Participant ID', pid],
+      ['Group', groupWord]];
     const a = document.createElement('a');
-    a.href = URL.createObjectURL(new Blob([csv], {type:'text/csv'}));
-    a.download = 'pm-' + pid + '-' + groupWord + '.csv'; a.click();
+    a.href = URL.createObjectURL(buildXlsx([{name:'Trials', rows:trialRows}, {name:'Summary', rows:summaryRows}]));
+    a.download = 'pm-' + pid + '-' + groupWord + '.xlsx'; a.click();
   };
   updateStatus();
 }
