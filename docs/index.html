@@ -280,11 +280,9 @@ function nextPractice(){
   if(trialKeyHandler){ document.removeEventListener('keydown', trialKeyHandler); trialKeyHandler = null; }
   if(practiceIdx >= practiceTrials.length){ showPracticeDone(); return; }
   pmFlagged = false;
-  const token = ++renderToken;
-  app.innerHTML = '<div class="fix">+</div>';
+  ++renderToken;
   updateStatus();
-  setTimeout(()=>{
-    if(token !== renderToken) return;
+  {
     const t = practiceTrials[practiceIdx];
     app.innerHTML =
       '<div class="sentence">' + t.Sentence + '</div>' +
@@ -323,7 +321,7 @@ function nextPractice(){
     };
     trialKeyHandler = onKey;
     document.addEventListener('keydown', onKey);
-  }, 500);
+  }
 }
 
 function showPracticeDone(){
@@ -340,11 +338,9 @@ function nextTrial(){
   if(trialKeyHandler){ document.removeEventListener('keydown', trialKeyHandler); trialKeyHandler = null; }
   if(trialIdx >= trials.length){ showEnd(); return; }
   pmFlagged = false;
-  const token = ++renderToken;
-  app.innerHTML = '<div class="fix">+</div>';
+  ++renderToken;
   updateStatus();
-  setTimeout(()=>{
-    if(token !== renderToken) return;
+  {
     const t = trials[trialIdx];
     app.innerHTML =
       '<div class="sentence">' + t.Sentence + '</div>' +
@@ -389,7 +385,7 @@ function nextTrial(){
     };
     trialKeyHandler = onKey;
     document.addEventListener('keydown', onKey);
-  }, 500);
+  }
 }
 
 function showPause(){
