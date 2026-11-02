@@ -407,8 +407,8 @@ function nextPractice(){
 }
 function showPracticeDone(){
   app.innerHTML =
-    '<h1>Practice done</h1>' +
-    '<p class="body-text">That was the practice \u2014 those ratings do not count toward your real task score. Please stop here and let the researcher know you have finished the practice. The researcher will give you your next activity, and you will continue onto the main task afterwards. Some of the practice sentences may come up again in the real task \u2014 that is fine, just rate them as you see them. Remember, whenever you see a sentence about <b>' + groupWord + '</b>, press the <b>SPACE bar</b> as well as rating it.</p>' +
+    '<h1><b>STOP HERE</b></h1>' +
+    '<p class="body-text">That was the practice \u2014 those ratings do not count toward your real task score. Please stop here and let the researcher know you have finished the practice. The researcher will give you your next activity, and you will continue onto the main task afterwards. Some of the practice sentences may come up again in the real task \u2014 that is fine, just rate them as you see them.</p>' +
     '<p><button id="start">Continue to the main task</button></p>';
   document.getElementById('start').onclick = ()=>{ trialIdx = 0; phase = 'trials'; nextTrial(); };
   updateStatus();
