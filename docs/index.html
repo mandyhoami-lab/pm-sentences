@@ -138,6 +138,8 @@ function uploadSessionAtEnd(){
   }).catch(()=>{ if(note) note.textContent = failText; });
 }
 let practiceTrials = [], practiceIdx = 0;
+let practiceResults = [], checkResults = [];
+let practiceState = null, checkState = null;
 let page = 'task', lastPage = 'study';
 let phase = 'id', checkIdx = 0, paused = false, pauseDone = false, trialsBuilt = false;
 let pauseTitle = 'Paused', renderToken = 0;
@@ -152,7 +154,13 @@ function buildTrials(){
   groupWord = group === 'food' ? 'food' : 'vehicle';
   targets = shuffle(DATA[group].slice());
   const allFillers = shuffle(DATA.fillers.slice());
-  practiceTrials = allFillers.slice(0, 6);
+  // Practice: 2 sentences from the participant's own target category plus 4
+  // fillers, shuffled, so the extra key gets practised before the real trials.
+  // The 2 practice targets are also among the 6 real targets, so they will
+  // come up again in the real task, like the practice fillers already do.
+  const practiceTargets = shuffle(DATA[group].slice()).slice(0, 2).map(t => ({ ...t, Target: 1 }));
+  const practiceFillers = allFillers.slice(0, 4).map(f => ({ ...f, Target: 0, Valence: '' }));
+  practiceTrials = shuffle(practiceTargets.concat(practiceFillers));
   fillers = allFillers;
   trials = [];
   let put = 10 + ri(4), ti = 0, fi = 0;
@@ -161,6 +169,8 @@ function buildTrials(){
     else { trials.push({ ...fillers[fi], Target: 0, Valence: '' }); fi++; }
   }
   results = [];
+  practiceResults = [];
+  checkResults = [];
   trialsBuilt = true;
 }
 
@@ -282,6 +292,7 @@ const CHECKS = [
 
 function showCheck(i){
   phase = 'check'; checkIdx = i;
+  checkState = { correct: false, attempts: 0, start: performance.now() };
   const c = CHECKS[i];
   app.innerHTML =
     '<h1>Quick check (' + (i+1) + ' of ' + CHECKS.length + ')</h1>' +
@@ -292,7 +303,10 @@ function showCheck(i){
     const sel = document.querySelector('input[name=q]:checked');
     const fb = document.getElementById('fb');
     if(!sel){ fb.textContent = 'Pick an answer first.'; return; }
+    checkState.attempts++;
     if(+sel.value === c.correct){
+      checkState.correct = true;
+      checkResults[i] = { question: c.q(), attempts: checkState.attempts, incorrect: checkState.attempts - 1, firstTry: checkState.attempts === 1 ? 1 : 0, timeToCorrect: Math.round(performance.now() - checkState.start) };
       fb.innerHTML = '<span class="good">Correct.</span>';
       setTimeout(()=>{ if(i+1 < CHECKS.length) showCheck(i+1); else { phase = 'practice'; practiceIdx = 0; nextPractice(); } }, 700);
     } else {
@@ -301,60 +315,100 @@ function showCheck(i){
   };
   updateStatus();
 }
+function recordPractice(skipped, rating, ratingRT){
+  const t = practiceTrials[practiceIdx];
+  const isTarget = t.Target === 1;
+  const pm = practiceState && practiceState.pm;
+  const reminded = practiceState && practiceState.reminded;
+  practiceResults[practiceIdx] = {
+    sentence: t.Sentence || '', target: isTarget ? 1 : 0, valence: t.Valence || '',
+    rating: rating === undefined ? '' : rating, ratingRT: ratingRT === undefined ? '' : ratingRT,
+    pm: pm ? 1 : 0, pmRT: (practiceState && practiceState.pmRT) || '',
+    reminder: reminded ? 1 : 0,
+    correct: isTarget ? (pm && !reminded ? 1 : 0) : (pm ? 0 : 1),
+    skipped: skipped ? 1 : 0
+  };
+}
 
 function nextPractice(){
   phase = 'practice';
   if(trialKeyHandler){ document.removeEventListener('keydown', trialKeyHandler); trialKeyHandler = null; }
   if(practiceIdx >= practiceTrials.length){ showPracticeDone(); return; }
   pmFlagged = false;
+  practiceState = { pm: false, pmRT: null, pending: null, pendingRT: null, reminded: false };
   ++renderToken;
   updateStatus();
-  {
-    const t = practiceTrials[practiceIdx];
-    app.innerHTML =
-      '<div class="sentence">' + t.Sentence + '</div>' +
-      '<div class="scale">Negative&nbsp; 1 - 2 - 3 - 4 - 5 - 6 - 7 &nbsp;Positive</div>' +
-      '<div><input type="text" id="ratebox" class="ratebox" inputmode="numeric"></div>' +
-      '<div class="pm-flag" id="pmflag"></div>' +
-      '<p class="small">Practice ' + (practiceIdx+1) + ' of 6 &nbsp;\u00b7&nbsp; press 1\u20137 to rate or type it in the box and press Enter &nbsp;\u00b7&nbsp; this is practice, it does not count</p>';
-    trialStart = performance.now();
-    const onKey = (e)=>{
-      const k = e.key;
-      if(e.target && e.target.id === 'ratebox'){
-        if(k === 'Enter'){
-          const v = e.target.value.trim();
-          if(['1','2','3','4','5','6','7'].includes(v)){
-            document.removeEventListener('keydown', onKey);
-            trialKeyHandler = null;
-            practiceIdx++; nextPractice();
-          }
-          return;
-        }
-        if(k === '\\' || k === 't' || k === 'T'){
-          e.preventDefault();
-          document.getElementById('pmflag').textContent = 'That is the extra key \u2014 in the real task, press it only for ' + groupWord + ' sentences.';
-        }
+  const t = practiceTrials[practiceIdx];
+  const isTarget = t.Target === 1;
+  app.innerHTML =
+    '<div class="sentence">' + t.Sentence + '</div>' +
+    '<div class="scale">Negative&nbsp; 1 - 2 - 3 - 4 - 5 - 6 - 7 &nbsp;Positive</div>' +
+    '<div><input type="text" id="ratebox" class="ratebox" inputmode="numeric"></div>' +
+    '<div class="pm-flag" id="pmflag"></div>' +
+    '<div class="feedback" id="pfb"></div>' +
+    '<p class="small">Practice ' + (practiceIdx+1) + ' of 6 &nbsp;\u00b7&nbsp; press 1\u20137 to rate or type it in the box and press Enter &nbsp;\u00b7&nbsp; press \\ or T for ' + groupWord + ' sentences too &nbsp;\u00b7&nbsp; this is practice, it does not count toward your score</p>';
+  trialStart = performance.now();
+  const fb = ()=>document.getElementById('pfb');
+  function pressPM(now){
+    if(practiceState.pm) return;
+    practiceState.pm = true;
+    practiceState.pmRT = Math.round(now - trialStart);
+    if(isTarget){
+      fb().innerHTML = '<span class="good">Correct \u2014 that was a ' + groupWord + ' sentence, and you remembered the extra key.</span>';
+      if(practiceState.pending !== null) finishWithPending();
+    } else {
+      fb().innerHTML = '<span class="bad">Not quite \u2014 this one was not a ' + groupWord + ' sentence, so no extra key was needed.</span>';
+    }
+  }
+  function finishWithPending(){
+    const r = practiceState.pending, rt = practiceState.pendingRT;
+    recordPractice(0, r, rt);
+    document.removeEventListener('keydown', onKey);
+    trialKeyHandler = null;
+    practiceIdx++; nextPractice();
+  }
+  function submitRating(v, now){
+    const rt = Math.round(now - trialStart);
+    if(isTarget && !practiceState.pm){
+      practiceState.pending = v; practiceState.pendingRT = rt; practiceState.reminded = true;
+      fb().innerHTML = '<span class="bad">Not quite \u2014 this was a ' + groupWord + ' sentence. Press \\ or T as well as rating it to move on. Your rating is saved.</span>';
+      return;
+    }
+    recordPractice(0, v, rt);
+    document.removeEventListener('keydown', onKey);
+    trialKeyHandler = null;
+    practiceIdx++; nextPractice();
+  }
+  const onKey = (e)=>{
+    const k = e.key;
+    const now = performance.now();
+    if(e.target && e.target.id === 'ratebox'){
+      if(k === 'Enter'){
+        const v = e.target.value.trim();
+        if(['1','2','3','4','5','6','7'].includes(v)) submitRating(v, now);
         return;
       }
       if(k === '\\' || k === 't' || k === 'T'){
-        document.getElementById('pmflag').textContent = 'That is the extra key \u2014 in the real task, press it only for ' + groupWord + ' sentences.';
-        return;
+        e.preventDefault();
+        pressPM(now);
       }
-      if(['1','2','3','4','5','6','7'].includes(k)){
-        document.removeEventListener('keydown', onKey);
-        trialKeyHandler = null;
-        practiceIdx++; nextPractice();
-      }
-    };
-    trialKeyHandler = onKey;
-    document.addEventListener('keydown', onKey);
-  }
+      return;
+    }
+    if(k === '\\' || k === 't' || k === 'T'){
+      pressPM(now);
+      return;
+    }
+    if(['1','2','3','4','5','6','7'].includes(k)){
+      submitRating(k, now);
+    }
+  };
+  trialKeyHandler = onKey;
+  document.addEventListener('keydown', onKey);
 }
-
 function showPracticeDone(){
   app.innerHTML =
     '<h1>Practice done</h1>' +
-    '<p class="body-text">That was the practice \u2014 those ratings do not count. The real task starts now: 90 sentences. Some of the practice sentences may come up again in the real task \u2014 that is fine, just rate them as you see them. Remember, whenever you see a sentence about <b>' + groupWord + '</b>, press <b>\\</b> or <b>T</b> as well as rating it.</p>' +
+    '<p class="body-text">That was the practice \u2014 those ratings do not count toward your real task score. The real task starts now: 90 sentences. Some of the practice sentences may come up again in the real task \u2014 that is fine, just rate them as you see them. Remember, whenever you see a sentence about <b>' + groupWord + '</b>, press <b>\\</b> or <b>T</b> as well as rating it.</p>' +
     '<p><button id="start">Start the task</button></p>';
   document.getElementById('start').onclick = ()=>{ trialIdx = 0; phase = 'trials'; nextTrial(); };
   updateStatus();
@@ -525,15 +579,34 @@ function showEnd(){
       const r = byTrial[i] || {};
       trialRows.push([pid, i+1, t.Sentence||'', t.Target, t.Valence||'', groupWord, r.rating ? +r.rating : '', r.ratingRT||'', r.pm?1:0, r.targetRT||'', r.skipped?1:0]);
     });
+    const pDone = practiceResults.filter(Boolean);
+    const pTargets = pDone.filter(r=>r.target===1);
+    const pFirstTry = pTargets.filter(r=>r.correct===1).length;
+    const pReminders = pDone.filter(r=>r.reminder===1).length;
+    const pFA = pDone.filter(r=>r.target===0 && r.pm===1).length;
+    const pRateRTs = pDone.map(r=>r.ratingRT).filter(v=>typeof v === 'number');
+    const cDone = checkResults.filter(Boolean);
+    const cFirstTry = cDone.filter(r=>r.firstTry===1).length;
+    const cAttempts = cDone.reduce((s,r)=>s + r.attempts, 0);
     const summaryRows = [['measure','result'],
       ['PM hits (of 6 ' + groupWord + ' targets)', hits + ' / 6'],
       ['PM false alarms (on filler trials)', fa],
       ['Mean PM response time', avg(pmRTs)],
       ['Mean rating RT', avg(rateRTs)],
       ['Participant ID', pid],
-      ['Group', groupWord]];
+      ['Group', groupWord],
+      ['Practice target sentences correct on first try (of 2)', pFirstTry + ' / 2'],
+      ['Practice reminders needed', pReminders],
+      ['Practice false alarms (extra key on practice fillers)', pFA],
+      ['Practice mean rating RT', avg(pRateRTs)],
+      ['Check questions correct on first try (of 3)', cFirstTry + ' / 3'],
+      ['Check total attempts', cAttempts]];
+    const practiceRows = [['practice_trial','sentence','target','valence','group','rating','rating_rt_ms','pm_pressed','pm_rt_ms','reminder_needed','correct_first_try','skipped']];
+    practiceResults.forEach((r,idx)=>{ if(r) practiceRows.push([idx+1, r.sentence, r.target, r.valence, groupWord, r.rating, r.ratingRT, r.pm, r.pmRT, r.reminder, r.correct, r.skipped]); });
+    const checkRows = [['question','attempts','incorrect_attempts','first_try_correct','time_to_correct_ms']];
+    checkResults.forEach(r=>{ if(r) checkRows.push([r.question, r.attempts, r.incorrect, r.firstTry, r.timeToCorrect]); });
     const a = document.createElement('a');
-    a.href = URL.createObjectURL(buildXlsx([{name:'Trials', rows:trialRows}, {name:'Summary', rows:summaryRows}]));
+    a.href = URL.createObjectURL(buildXlsx([{name:'Trials', rows:trialRows}, {name:'Summary', rows:summaryRows}, {name:'Practice', rows:practiceRows}, {name:'Checks', rows:checkRows}]));
     a.download = 'pm-' + pid + '-' + groupWord + '.xlsx'; a.click();
   };
   uploadSessionAtEnd();
@@ -554,11 +627,27 @@ function goNext(){
     return;
   }
   if(phase === 'check'){
+    if(!checkState || !checkState.correct){
+      const fb = document.getElementById('fb');
+      if(fb) fb.textContent = 'Answer this question correctly before moving on.';
+      return;
+    }
     if(checkIdx + 1 < CHECKS.length){ showCheck(checkIdx + 1); }
     else { phase = 'practice'; practiceIdx = 0; nextPractice(); }
     return;
   }
-  if(phase === 'practice'){ practiceIdx++; nextPractice(); return; }
+  if(phase === 'practice'){
+    if(practiceIdx >= practiceTrials.length){ trialIdx = 0; phase = 'trials'; nextTrial(); return; }
+    const t = practiceTrials[practiceIdx];
+    if(t.Target === 1 && !(practiceState && practiceState.pm)){
+      const fb = document.getElementById('pfb');
+      if(fb) fb.innerHTML = '<span class="bad">Not quite \u2014 this was a ' + groupWord + ' sentence. Press \\ or T as well as rating it to move on.</span>';
+      return;
+    }
+    recordPractice(1, '', '');
+    if(trialKeyHandler){ document.removeEventListener('keydown', trialKeyHandler); trialKeyHandler = null; }
+    practiceIdx++; nextPractice(); return;
+  }
   if(phase === 'trials'){
     if(trialKeyHandler){ document.removeEventListener('keydown', trialKeyHandler); trialKeyHandler = null; }
     results.push({ trial: trialIdx, skipped: true });
