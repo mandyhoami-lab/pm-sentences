@@ -62,7 +62,7 @@
   <div class="body-text">
     <p><b>What this study is about.</b> This study looks at prospective memory — remembering to do something in the future while you are busy doing something else. In this task, your main job is to rate sentences, and your extra job is to remember to press an extra key whenever a certain kind of sentence appears.</p>
     <p><b>What the task measures.</b> The task measures: prospective-memory hits (how many of the 6 target sentences you catch), prospective-memory false alarms (pressing the extra key on other sentences), prospective-memory response time, how accurately and how quickly you rate the sentences (your ongoing task), which target group you were given (food or vehicles), and the valence of the target sentences.</p>
-    <p><b>Instructions.</b> Rate each sentence from 1 (very negative) to 7 (very positive), with 4 as neutral. Whenever you see a sentence about food or about vehicles (depending on your group), press the \ key or the T key as well as rating it. There are 90 sentences and a short practice first. It takes about 10 minutes.</p>
+    <p><b>Instructions.</b> Rate each sentence from 1 (very negative) to 7 (very positive), with 4 as neutral. Whenever you see a sentence about food or about vehicles (depending on your group), press the SPACE bar as well as rating it. There are 90 sentences and a short practice first. It takes about 10 minutes.</p>
     <p><b>Your data.</b> Nothing is uploaded anywhere. Your results stay in this browser tab until you download the Excel file at the end — that download is the only copy of your data, so keep the tab open until then.</p>
   </div>
   <p class="small">This page will be updated with the full study information.</p>
@@ -73,7 +73,7 @@
   <div class="body-text">
     <p>How Short-Form Content May Affect Our Prospective Memory. Please read this form carefully. Ask the study team any questions before you decide to take part.</p>
     <p><b>Purpose.</b> You are invited to take part in a research study about whether short-form content, such as short videos, affects prospective memory: remembering to do something in the future when a certain event happens. In this study, you will do a sentence-rating task, take a break to watch short videos or read short stories, and then finish the task. The results may help researchers understand how short-form content affects memory for future intentions.</p>
-    <p><b>What you will do.</b> The study takes about 45 minutes and takes place in person in an SDSU psychology research cubicle. First, you will enter a participant ID and read the instructions. You will answer three short questions to check you understood, then do a six-sentence practice round. Then the main task begins: you will see sentences, one at a time, and rate each one from 1 (very negative) to 7 (very positive), with 4 as neutral. Whenever you see a sentence about food or about vehicles (you will be told which one applies to you), press the backslash (\) key or the T key as well as rating it. After the first half of the task, you will take a 10-minute break. During the break, you will be assigned to watch high-stimulation short-form videos, watch low-stimulation short-form videos, or read short stories. After the break, you will complete the second half of the task. At the end, you will see a short summary and download a file of your results. Lastly, you will complete a short questionnaire about your age, gender, daily screen time, and any conditions that could affect your memory or attention.</p>
+    <p><b>What you will do.</b> The study takes about 45 minutes and takes place in person in an SDSU psychology research cubicle. First, you will enter a participant ID and read the instructions. You will answer three short questions to check you understood, then do a six-sentence practice round. Then the main task begins: you will see sentences, one at a time, and rate each one from 1 (very negative) to 7 (very positive), with 4 as neutral. Whenever you see a sentence about food or about vehicles (you will be told which one applies to you), press the SPACE bar as well as rating it. After the first half of the task, you will take a 10-minute break. During the break, you will be assigned to watch high-stimulation short-form videos, watch low-stimulation short-form videos, or read short stories. After the break, you will complete the second half of the task. At the end, you will see a short summary and download a file of your results. Lastly, you will complete a short questionnaire about your age, gender, daily screen time, and any conditions that could affect your memory or attention.</p>
     <p><b>Risks.</b> The risks of this study are minimal. Some sentences describe negative things, and a few people may find them mildly unpleasant. The videos may be fast-paced or stimulating, and some people may find them tiring. You may also feel bored or tired. You can stop at any time, for any reason, with no penalty.</p>
     <p><b>Benefits.</b> There is no direct benefit to you. Your participation may help researchers understand prospective memory. If you are participating through SONA, you will receive 1.5 SONA credits for completing the study.</p>
     <p><b>Confidentiality.</b> We do not collect your name. You are identified only by the participant ID you enter. Your task results are saved as a file on your own device when you finish the task; the task page itself does not send your data anywhere. Your questionnaire answers are collected through Qualtrics and identified only by your participant ID. [To fill in: how you will send the file to the study team, where it will be stored, how long it will be kept, and who can access it.] Results will only be reported in groups. No individual will be identified in any report.</p>
@@ -242,7 +242,7 @@ function showId(){
   phase = 'id';
   app.innerHTML =
     '<div class="note"><b>Online version of the PM Sentences Task.</b>' +
-    'Browser version of pm_sentences_ks16.psyexp (PsychoPy). Same 90 sentences, same 1\u20137 rating, same 6 hidden targets, same \\ / T keys. ' +
+    'Browser version of pm_sentences_ks16.psyexp (PsychoPy). Same 90 sentences, same 1\u20137 rating, same 6 hidden targets, with the SPACE bar as the PM key. ' +
     'This page does not upload anything: your data is saved only when you download the Excel file at the end, so keep this tab open until then.</div>' +
     '<h1>PM Sentences Task</h1>' +
     '<p class="body-text">In this study you will read sentences and rate them, and remember to do one extra thing when a certain kind of sentence appears. It takes about 10 minutes.</p>' +
@@ -264,7 +264,7 @@ function showInstructions(){
   app.innerHTML =
     '<h1>Instructions</h1>' +
     '<div class="body-text"><p><b>Your main job:</b> rate each sentence on a scale of 1\u20137, where 1 is very negative, 7 is very positive, and 4 is neutral. Work as quickly and accurately as you can. Press the number key for your rating to move to the next sentence.</p>' +
-    '<p><b>Your extra job:</b> some of the sentences will be about <b>' + groupWord + '</b>. Whenever you see a sentence about ' + groupWord + ', press the <b>\\</b> key or the <b>T</b> key <b>as well as</b> rating it. Pressing \\ or T does not move on to the next sentence \u2014 you still give your 1\u20137 rating afterwards.</p>' +
+    '<p><b>Your extra job:</b> some of the sentences will be about <b>' + groupWord + '</b>. Whenever you see a sentence about ' + groupWord + ', press the <b>SPACE bar</b> <b>as well as</b> rating it. Pressing SPACE does not move on to the next sentence \u2014 you still give your 1\u20137 rating afterwards.</p>' +
     '<p>There are 90 sentences in total, with a short practice first. Press the space bar when you are ready to check you understood, then the task will start.</p></div>' +
     '<p class="small">Press space to continue.</p>';
   if(instrKeyHandler){ document.removeEventListener('keydown', instrKeyHandler); instrKeyHandler = null; }
@@ -277,17 +277,17 @@ function showInstructions(){
 
 const CHECKS = [
   { q: ()=> 'What should you do when you see a sentence about ' + groupWord + '?',
-    opts: ()=> ['Press \\ or T as well as rating it', 'Only rate it, nothing else', 'Skip the sentence', 'Press the space bar'],
+    opts: ()=> ['Press the SPACE bar as well as rating it', 'Only rate it, nothing else', 'Skip the sentence', 'Press the Enter key'],
     correct: 0,
-    why: 'Press \\ or T as well as giving your 1\u20137 rating.' },
+    why: 'Press the SPACE bar as well as giving your 1\u20137 rating.' },
   { q: ()=> 'What do the number keys 1\u20137 do?',
     opts: ()=> ['They rate the sentence from very negative (1) to very positive (7)', 'They skip to the next sentence', 'They mark a ' + groupWord + ' sentence', 'They pause the task'],
     correct: 0,
     why: 'Keys 1\u20137 give your rating: 1 is very negative, 7 is very positive, 4 is neutral.' },
-  { q: ()=> 'After you press \\ or T for a ' + groupWord + ' sentence, what happens next?',
+  { q: ()=> 'After you press SPACE for a ' + groupWord + ' sentence, what happens next?',
     opts: ()=> ['You still rate that sentence before moving on', 'The task moves straight to the next sentence', 'The task ends', 'The sentence disappears'],
     correct: 0,
-    why: 'Pressing \\ or T does not move on \u2014 you still rate the sentence afterwards.' },
+    why: 'Pressing SPACE does not move on \u2014 you still rate the sentence afterwards.' },
 ];
 
 function showCheck(i){
@@ -346,7 +346,7 @@ function nextPractice(){
     '<div><input type="text" id="ratebox" class="ratebox" inputmode="numeric"></div>' +
     '<div class="pm-flag" id="pmflag"></div>' +
     '<div class="feedback" id="pfb"></div>' +
-    '<p class="small">Practice ' + (practiceIdx+1) + ' of 6 &nbsp;\u00b7&nbsp; press 1\u20137 to rate or type it in the box and press Enter &nbsp;\u00b7&nbsp; press \\ or T for ' + groupWord + ' sentences too &nbsp;\u00b7&nbsp; this is practice, it does not count toward your score</p>';
+    '<p class="small">Practice ' + (practiceIdx+1) + ' of 6 &nbsp;\u00b7&nbsp; press 1\u20137 to rate or type it in the box and press Enter &nbsp;\u00b7&nbsp; press SPACE for ' + groupWord + ' sentences too &nbsp;\u00b7&nbsp; this is practice, it does not count toward your score</p>';
   trialStart = performance.now();
   const fb = ()=>document.getElementById('pfb');
   function pressPM(now){
@@ -371,7 +371,7 @@ function nextPractice(){
     const rt = Math.round(now - trialStart);
     if(isTarget && !practiceState.pm){
       practiceState.pending = v; practiceState.pendingRT = rt; practiceState.reminded = true;
-      fb().innerHTML = '<span class="bad">Not quite \u2014 this was a ' + groupWord + ' sentence. Press \\ or T as well as rating it to move on. Your rating is saved.</span>';
+      fb().innerHTML = '<span class="bad">Not quite \u2014 this was a ' + groupWord + ' sentence. Press SPACE as well as rating it to move on. Your rating is saved.</span>';
       return;
     }
     recordPractice(0, v, rt);
@@ -382,20 +382,17 @@ function nextPractice(){
   const onKey = (e)=>{
     const k = e.key;
     const now = performance.now();
+    if(e.code === 'Space' || k === ' '){
+      e.preventDefault();
+      pressPM(now);
+      return;
+    }
     if(e.target && e.target.id === 'ratebox'){
       if(k === 'Enter'){
         const v = e.target.value.trim();
         if(['1','2','3','4','5','6','7'].includes(v)) submitRating(v, now);
         return;
       }
-      if(k === '\\' || k === 't' || k === 'T'){
-        e.preventDefault();
-        pressPM(now);
-      }
-      return;
-    }
-    if(k === '\\' || k === 't' || k === 'T'){
-      pressPM(now);
       return;
     }
     if(['1','2','3','4','5','6','7'].includes(k)){
@@ -408,7 +405,7 @@ function nextPractice(){
 function showPracticeDone(){
   app.innerHTML =
     '<h1>Practice done</h1>' +
-    '<p class="body-text">That was the practice \u2014 those ratings do not count toward your real task score. The real task starts now: 90 sentences. Some of the practice sentences may come up again in the real task \u2014 that is fine, just rate them as you see them. Remember, whenever you see a sentence about <b>' + groupWord + '</b>, press <b>\\</b> or <b>T</b> as well as rating it.</p>' +
+    '<p class="body-text">That was the practice \u2014 those ratings do not count toward your real task score. The real task starts now: 90 sentences. Some of the practice sentences may come up again in the real task \u2014 that is fine, just rate them as you see them. Remember, whenever you see a sentence about <b>' + groupWord + '</b>, press the <b>SPACE bar</b> as well as rating it.</p>' +
     '<p><button id="start">Start the task</button></p>';
   document.getElementById('start').onclick = ()=>{ trialIdx = 0; phase = 'trials'; nextTrial(); };
   updateStatus();
@@ -431,38 +428,34 @@ function nextTrial(){
       '<p class="small">Trial ' + (trialIdx+1) + ' of 90 &nbsp;\u00b7&nbsp; press 1\u20137 to rate or type it in the box and press Enter</p>';
     trialStart = performance.now();
     const onKey = (e)=>{
-      const k = e.key;
-      const now = performance.now();
-      if(e.target && e.target.id === 'ratebox'){
-        if(k === 'Enter'){
-          const v = e.target.value.trim();
-          if(['1','2','3','4','5','6','7'].includes(v)){
-            document.removeEventListener('keydown', onKey);
-            trialKeyHandler = null;
-            results.push({ trial: trialIdx, rating: v, ratingRT: Math.round(now - trialStart) });
-            trialIdx++; nextTrial();
-          }
-          return;
-        }
-        if(k === '\\' || k === 't' || k === 'T'){
-          e.preventDefault();
-          if(!pmFlagged){ pmFlagged = true; results.push({ trial: trialIdx, pm: true, targetRT: Math.round(now - trialStart) }); document.getElementById('pmflag').textContent = 'PM response noted'; }
-          return;
+    const k = e.key;
+    const now = performance.now();
+    if(e.code === 'Space' || k === ' '){
+      e.preventDefault();
+      if(!pmFlagged){ pmFlagged = true; results.push({ trial: trialIdx, pm: true, targetRT: Math.round(now - trialStart) }); document.getElementById('pmflag').textContent = 'PM response noted'; }
+      return;
+    }
+    if(e.target && e.target.id === 'ratebox'){
+      if(k === 'Enter'){
+        const v = e.target.value.trim();
+        if(['1','2','3','4','5','6','7'].includes(v)){
+          document.removeEventListener('keydown', onKey);
+          trialKeyHandler = null;
+          results.push({ trial: trialIdx, rating: v, ratingRT: Math.round(now - trialStart) });
+          trialIdx++; nextTrial();
         }
         return;
       }
-      if(k === '\\' || k === 't' || k === 'T'){
-        if(!pmFlagged){ pmFlagged = true; results.push({ trial: trialIdx, pm: true, targetRT: Math.round(now - trialStart) }); document.getElementById('pmflag').textContent = 'PM response noted'; }
-        return;
-      }
-      if(['1','2','3','4','5','6','7'].includes(k)){
-        document.removeEventListener('keydown', onKey);
-        trialKeyHandler = null;
-        results.push({ trial: trialIdx, rating: k, ratingRT: Math.round(now - trialStart) });
-        trialIdx++; nextTrial();
-      }
-    };
-    trialKeyHandler = onKey;
+      return;
+    }
+    if(['1','2','3','4','5','6','7'].includes(k)){
+      document.removeEventListener('keydown', onKey);
+      trialKeyHandler = null;
+      results.push({ trial: trialIdx, rating: k, ratingRT: Math.round(now - trialStart) });
+      trialIdx++; nextTrial();
+    }
+  };
+  trialKeyHandler = onKey;
     document.addEventListener('keydown', onKey);
   }
 }
@@ -641,7 +634,7 @@ function goNext(){
     const t = practiceTrials[practiceIdx];
     if(t.Target === 1 && !(practiceState && practiceState.pm)){
       const fb = document.getElementById('pfb');
-      if(fb) fb.innerHTML = '<span class="bad">Not quite \u2014 this was a ' + groupWord + ' sentence. Press \\ or T as well as rating it to move on.</span>';
+      if(fb) fb.innerHTML = '<span class="bad">Not quite \u2014 this was a ' + groupWord + ' sentence. Press SPACE as well as rating it to move on.</span>';
       return;
     }
     recordPractice(1, '', '');
