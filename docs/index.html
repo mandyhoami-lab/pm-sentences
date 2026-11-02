@@ -51,6 +51,7 @@
 </div>
 <div id="menu">
   <a data-page="study">Study Information</a>
+  <a data-page="consent">Consent Form</a>
   <a data-page="task">Task</a>
   <a data-page="contact">Contact Information</a>
 </div>
@@ -65,6 +66,23 @@
     <p><b>Your data.</b> Nothing is uploaded anywhere. Your results stay in this browser tab until you download the Excel file at the end — that download is the only copy of your data, so keep the tab open until then.</p>
   </div>
   <p class="small">This page will be updated with the full study information.</p>
+</div>
+
+<div class="page" id="page-consent">
+  <h1>Consent Form</h1>
+  <div class="body-text">
+    <p><i>DRAFT - pending IRB approval. Remove this line once approved.</i></p>
+    <p>How Short-Form Content May Affect Our Prospective Memory. Please read this form carefully. Ask the study team any questions before you decide to take part.</p>
+    <p><b>Purpose.</b> You are invited to take part in a research study about whether short-form content, such as short videos, affects prospective memory: remembering to do something in the future when a certain event happens. In this study, you will do a sentence-rating task, take a break to watch short videos or read short stories, and then finish the task. The results may help researchers understand how short-form content affects memory for future intentions.</p>
+    <p><b>What you will do.</b> The study takes about 45 minutes and takes place in person in an SDSU psychology research cubicle. First, you will enter a participant ID and read the instructions. You will answer three short questions to check you understood, then do a six-sentence practice round. Then the main task begins: you will see sentences, one at a time, and rate each one from 1 (very negative) to 7 (very positive), with 4 as neutral. Whenever you see a sentence about food or about vehicles (you will be told which one applies to you), press the backslash (\) key or the T key as well as rating it. After the first half of the task, you will take a 10-minute break. During the break, you will be assigned to watch high-stimulation short-form videos, watch low-stimulation short-form videos, or read short stories. After the break, you will complete the second half of the task. At the end, you will see a short summary and download a file of your results. Lastly, you will complete a short questionnaire about your age, gender, daily screen time, and any conditions that could affect your memory or attention.</p>
+    <p><b>Risks.</b> The risks of this study are minimal. Some sentences describe negative things, and a few people may find them mildly unpleasant. The videos may be fast-paced or stimulating, and some people may find them tiring. You may also feel bored or tired. You can stop at any time, for any reason, with no penalty.</p>
+    <p><b>Benefits.</b> There is no direct benefit to you. Your participation may help researchers understand prospective memory. If you are participating through SONA, you will receive 1.5 SONA credits for completing the study.</p>
+    <p><b>Confidentiality.</b> We do not collect your name. You are identified only by the participant ID you enter. Your task results are saved as a file on your own device when you finish the task; the task page itself does not send your data anywhere. Your questionnaire answers are collected through Qualtrics and identified only by your participant ID. [To fill in: how you will send the file to the study team, where it will be stored, how long it will be kept, and who can access it.] Results will only be reported in groups. No individual will be identified in any report.</p>
+    <p><b>Voluntary participation.</b> Taking part is voluntary. You may stop at any time without penalty and without giving a reason. Stopping will not affect you in any way. If you stop early, no results file is created, so no data from your session will be kept.</p>
+    <p><b>Questions.</b> If you have questions about the study, contact the study team: <a href="mailto:ecantillon5444@sdsu.edu">ecantillon5444@sdsu.edu</a>, <a href="mailto:bluu7931@sdsu.edu">bluu7931@sdsu.edu</a>, <a href="mailto:ata3958@sdsu.edu">ata3958@sdsu.edu</a>, or <a href="mailto:nsalazar2820@sdsu.edu">nsalazar2820@sdsu.edu</a>. [To fill in: contact for the Institutional Review Board.]</p>
+    <p><b>Your consent.</b> By entering your participant ID and starting the task, you confirm that you are 18 or older, that you have read this form, and that you agree to take part. You may save or print a copy of this form for your records.</p>
+    <p class="small">Signature: ________________________________ &nbsp; Date: ________________</p>
+  </div>
 </div>
 
 <div class="page" id="page-contact">
@@ -141,6 +159,7 @@ function buildTrials(){
 function updateStatus(){
   let s = '';
   if(page === 'study') s = 'Study Information';
+  else if(page === 'consent') s = 'Consent Form';
   else if(page === 'contact') s = 'Contact Information';
   else {
     if(phase === 'id') s = 'Task \u00b7 Participant ID';
