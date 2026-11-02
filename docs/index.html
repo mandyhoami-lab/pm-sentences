@@ -348,7 +348,7 @@ function nextPractice(){
     '<div><input type="text" id="ratebox" class="ratebox" inputmode="numeric"></div>' +
     '<div class="pm-flag" id="pmflag"></div>' +
     '<div class="feedback" id="pfb"></div>' +
-    '<p class="small">Practice ' + (practiceIdx+1) + ' of 6 &nbsp;\u00b7&nbsp; press 1\u20137 to rate or type it in the box and press Enter &nbsp;\u00b7&nbsp; press SPACE for ' + groupWord + ' sentences too &nbsp;\u00b7&nbsp; this is practice, it does not count toward your score</p>';
+    '<p class="small">Practice ' + (practiceIdx+1) + ' of 6 &nbsp;\u00b7&nbsp; type 1\u20137 and press Enter to rate &nbsp;\u00b7&nbsp; press SPACE for ' + groupWord + ' sentences too &nbsp;\u00b7&nbsp; this is practice, it does not count toward your score</p>';
   trialStart = performance.now();
   const fb = ()=>document.getElementById('pfb');
   function pressPM(now){
@@ -403,6 +403,7 @@ function nextPractice(){
   };
   trialKeyHandler = onKey;
   document.addEventListener('keydown', onKey);
+  focusRatebox();
 }
 function showPracticeDone(){
   app.innerHTML =
@@ -411,6 +412,15 @@ function showPracticeDone(){
     '<p><button id="start">Start the task</button></p>';
   document.getElementById('start').onclick = ()=>{ trialIdx = 0; phase = 'trials'; nextTrial(); };
   updateStatus();
+}
+
+// Desktop only: put the cursor in the rating box so participants can type
+// straight away. Touch devices keep the current behaviour (no keyboard popup).
+function focusRatebox(){
+  if(window.matchMedia && window.matchMedia('(pointer: fine)').matches){
+    const rb = document.getElementById('ratebox');
+    if(rb) rb.focus();
+  }
 }
 
 function nextTrial(){
@@ -427,7 +437,7 @@ function nextTrial(){
       '<div class="scale">Negative&nbsp; 1 - 2 - 3 - 4 - 5 - 6 - 7 &nbsp;Positive</div>' +
       '<div><input type="text" id="ratebox" class="ratebox" inputmode="numeric"></div>' +
       '<div class="pm-flag" id="pmflag"></div>' +
-      '<p class="small">Trial ' + (trialIdx+1) + ' of 90 &nbsp;\u00b7&nbsp; press 1\u20137 to rate or type it in the box and press Enter</p>';
+      '<p class="small">Trial ' + (trialIdx+1) + ' of 90 &nbsp;\u00b7&nbsp; type 1\u20137 and press Enter to rate</p>';
     trialStart = performance.now();
     const onKey = (e)=>{
     const k = e.key;
@@ -459,6 +469,7 @@ function nextTrial(){
   };
   trialKeyHandler = onKey;
     document.addEventListener('keydown', onKey);
+    focusRatebox();
   }
 }
 
